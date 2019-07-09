@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=480px,target-densitydpi=high-dpi,  user-scalable=no" name="viewport" id="viewport">
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="keywords" content="eos,wallet,AIGT">
+    <meta http-equiv="description" content="the wallet of AIGT">
+    <link rel="icon" type="image/png" href="css/favicon.png">
+    <link rel="stylesheet" href="css/index.css">  
+    <script src="https://cdn.scattercdn.com/file/scatter-cdn/js/latest/scatterjs-core.min.js"></script>
+    <script src="https://cdn.scattercdn.com/file/scatter-cdn/js/latest/scatterjs-plugin-eosjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/eosjs@16.0.8/lib/eos.min.js"></script>
+    <title>AIGT wallet</title>
+</head>
+
+<body>
+    <div style="z-index:99999;display:none;height:100%;position:absolute;top:0;left:0;width:100%" id=iframediv >
+   		 <div id=iframemenu style="height:60px"></div> 
+         <div id=iframed style="height:100%;"></div> 
+    </div>
+    <div class="maindiv" id="maindiv"> 
+        <div class="bottom-menu"><div id=menu style="width: 350px; height:70px" ></div></div>
+
+        <div class="pages-container">
+            <div id="minepool" class="page">
+                <div  style="height: 70px; background: url('css/banner_bg_common.png');"> 
+                    <div style="background-image: url('css/favicon.png');height: 60px;width: 60px; margin:5px;background-size: 100% 100%;float: left;"></div>
+                        
+                     
+                    <div   style="float: left;padding:5px">
+                        <div id="accountName" style="height:30px;margin-top: 8px;  color: #c0a17b;cursor:pointer"  onclick="setAccount(1)">输入帐号</div>
+                        <div class="accountstate" style="height:30px; font-size:12px">正在连接钱包...</div>
+                      
+                    </div>
+                     <div id=topmenu style="position:absolute;right:30px;top:17px;"></div>
+                </div>
+                <div class="scrollView" style="width: 95%;">
+
+                    <div class="assets-container" style="height: 140px; ">
+                        <div class="asset" id="div_EOS">
+                            <div class="token-container" style="background-image: url('css/eos_icon.png')"></div>
+                            <div style="top:8px;" class="value">0</div>
+                           
+                            <div class="title" onclick="mining()" style="right: 5px;width: 65px;position: absolute;cursor:pointer">
+                                采矿
+                            </div>
+                        </div>
+                        <div class="asset" id="div_AIGT">
+                            <div class="token-container" style="background-image: url('css/a.png')">  </div>
+                            <div style="top:8px;" class="value">0</div>                            
+                            <div style="float: right; line-height:20px; margin: 10px;" class="locked">0</div>
+                        </div>
+                    </div>
+                    <div class="poolinfo-container">
+                        <div class="poolinfo" argn="eosprize" prefix="EOS奖金池：">加载中...</div>
+                        <div class="poolinfo" argn="eosfund" prefix="EOS基金池：">加载中...</div>
+                        <div class="poolinfo" argn="prize" prefix="原矿奖金池：">加载中...</div>
+                        <div class="poolinfo" argn="mine"  prefix="待开原矿池：">加载中... </div>
+                        <!-- <div style="left: 267px; top: -48px; color:#aaa; border: none; font-size: 12px;pointer-events: none;"
+                            class="poolinfo" argn="mined" prefix="已开采：">加载中...</div> -->
+                    </div>
+                <!-- 排行榜 -->
+                <div class="leader-board">
+
+                    <div class="title0">
+                        <span>等级</span>
+                        <span>账户</span>
+                        <span>已锁仓排行</span>
+                    </div>
+                    <div style="overflow: auto;height:215px;" id=rankdiv> </div>
+                </div>
+                </div>
+
+ 
+                
+                <!-- 采矿 -->
+                <div class="miningbox" id="miningbox" style="height:780px;">
+                    <!-- 采矿顶部 -->
+                    <div class="miningtitle">
+                        <img onclick="miningbox_back()" style="cursor:pointer" id="miningbox_back" src="css/back.png">
+                        <span>采矿</span>
+                        <img id="miningbox_btn" src="css/pull_btn_common.png">
+                    </div>
+                    <!-- 采矿详情框 -->
+                    <div  id="miningdebox">
+                         <div class="miningitem" style="margin-bottom:15px" >完全由智能合约实现，实时到您的钱包。</div>
+                        <div id="refeBox" style="width: 404px;height: 120px;"> </div>
+                       
+                        <div style="border:none" class="cent" id="miningitem"></div>
+                      
+                        <div class="miningitem cent" style="background: #b08f66;cursor:pointer;color:#222;"
+                            onclick="digmine()">确定</div>
+
+                    </div>
+                    
+                                    <!-- 采矿详情 -->
+                <div class="mining">
+                    <div class="title_0">
+                        采矿详情
+                    </div>
+                    <div class="title0_0">
+                        <span>账户</span>
+                        <span>采矿额</span>
+                        <span>获得</span>
+                    </div>
+                    <div  style="overflow: auto;height:215px;" id=mydigminediv> </div>
+                        
+                    </div>
+                </div>
+                </div>
+            </div>
+            
+             <!-- 推广 -->
+                <div id="promotion" style="display:none;position:absolute;top:0px;left:0;width:100%;background:#1f1f1f">
+                    <div id="topti" style="width: 100%; height: 70px; text-align: center; position: relative; z-index: 99999;">
+                        <!--<div style="width: 50%; height: 40px; text-align: center; font-size: 30px; background: #B3966F;float:left;line-height:40px" onclick="copy()">复制链接</div><div style="width: 50%; height: 40px; text-align: center; font-size: 30px; background: red;float:left;line-height:40px">关闭</div>-->
+                    </div>
+                    <div id=sharediv style="background:#1f1f1f;padding:6px">
+                        <div id="invitebox" style="height: 140px; width: 97%; border-radius: 10px; background: #3C3C3C;"></div>
+                        <div id="fribox" style="height: 565px; width: 97%; margin-top: 8px;background:url(css/boxkbg.png) no-repeat;background-size:100% 100%">
+                            <div style="color:#b08f66; padding: 15px;font-size: 22px; " >
+                                激情一夏，邀请伙伴无上限，奖励返佣不封顶，PK你的伙伴的原矿数，最高获得20% EOS奖励，月入百万不是梦<br> 特性：<br>1. 全智能合约实现，推荐销售奖励秒到钱包<br>2.
+                                高达20% EOS 销售奖励<br>3. 采矿推广两不误，原矿任性采
+                            </div>
+                            <div style="width: 100%; height: auto;">
+                                <p style="text-align:left" id="refnum"><span style="float:right;color:#B1B1B1" id="firosnum"></span></p><br>
+                                <div id="divqrcode" style="position:absolute;width:100px;height:100px;top: 560px; left: 190px;"></div>
+                            </div>
+                        </div>
+                    </div>
+               </div>
+            <!-- 投票 -->
+            <div id="votepage" class="page" style="display:none"  >
+                <div id="votemenu" style="height:60px;padding-left:35px;background:url(css/banner_bg_common.png) no-repeat">
+                </div>
+                 
+                <div id="votelist" style="height:auto;overflow: auto;"> 加载中... </div>
+
+                <!-- 解锁 -->
+                <div id="unlock" style="display:none">
+                    <div id="unlockCoeff" style="height: 140px; width: 97%; border-radius: 10px; background: #3C3C3C;"></div>
+                    <div id="unlockRecord" style="height: 565px; width: 97%; margin-top: 8px;background:url(css/boxkbg.png) no-repeat;background-size:100% 100%">历史记录</div>
+                </div>
+
+
+                <!-- 投票详情 -->
+                <div id="votedetail" style="width:100%;height:100%;position:absolute;background:#383838;display:none;z-index:9999;overflow:hidden;top:0;">
+                    <div style="width: 100%; height: 60px;border-radius:10px 10px 0 0;background:#444444; color: #b3966f; font-size: 22px; line-height:50px;">
+                        <img src="css/back.png" onclick="votebackbtn()" style="float:left;margin:10px; cursor: pointer;" />
+                        <span id=votefrom style="float:left; width: 400px">投票详情</span>
+                        <div id=votemenus style="float: right; width: 90px" ></div>
+                    </div>
+                    <div id="voteinfo" style="height:60px;padding-left:40px ;"></div>
+                    <div id="votes" style="height:100%"></div>
+                    <div style="position:absolute;bottom:0;width:100%;border-top:1px solid #eee; background: #3F3F3F ">
+                        <div id="voteradi"></div>
+                        <input id="vote"  style="width: 230px; float:left; height: 35px; background: none; border: 1.5px solid #86745D; color: #C1A27D; font-size: 22px; text-indent: 14px;margin-left:40px"
+                            type="text" placeholder="请输入AGC数量"> <div id="voteSubmit" style="width:21%; height: 60px;float:right;margin-right:20px" ></div> <br>
+                        <div id=memodiv style="margin-left:40px"></div><br>
+                        
+                    </div>
+                </div>
+
+            </div>
+            <!-- 发现 -->
+            <div id="find" class="page" style="display:none">
+                <!-- <div id="findtitle" style="height:70px;padding-left:35px;background:url(css/banner_bg_common.png) no-repeat;display:none;">    </div> -->
+                <div id="findbox" style="margin-top:4px;">
+                   
+                </div>
+            </div>
+            <!-- 我的 -->
+            <div id="mine" style="width:100%;height:100%;display: none;overflow:hidden;">
+                <div style="color: #c7a780; line-height: 25px; font-size: 20px; text-align: center;" class="minebanner"
+                    id="minebanner">
+                    <div style="" id="records">
+
+                    </div>
+                </div>
+                <div style="width: 97%; height: 712px; border-radius: 27px; background: url(css/minebg.png) no-repeat;"
+                    id="minebox">
+                    <!--<div style="margin-top: 35px; background: url(css/addres.png) no-repeat; background-position: 35px 18px; background-size: 6%;"
+                        id="addressbok">
+                        地址簿
+                        <img src="css/inbtn.png">
+                    </div>-->
+                    <div style="background: url(css/hbxz.png) no-repeat; background-position: 35px 21px; background-size:30px;cursor: pointer;color:#c7a780"
+                        id="currency">
+                        货币选择
+                        <img src="css/inbtn.png">
+                    </div>
+                    <div style="background: url(css/version.png) no-repeat; background-position: 35px 18px; background-size: 30px;cursor: pointer;;color:#c7a780"
+                        id="versionb">
+                        版本升级
+                        <img src="css/inbtn.png">
+                    </div>
+                    <div style="background: url(css/ques.png) no-repeat; background-position: 35px 18px; background-size: 30px;cursor: pointer;;color:#c7a780"
+                        id="ques">
+                        问题反馈
+                        <img src="css/inbtn.png">
+                    </div>
+                    <div style="background: url(css/message.png) no-repeat; background-position: 35px 21px; background-size: 30px;cursor: pointer;;color:#c7a780"
+                        id="message" onclick="message()">
+                        社群信息
+                        <img src="css/inbtn.png">
+                    </div>
+                    <div style="background: url(css/aboutus.png) no-repeat; background-position: 35px 21px; background-size: 30px;cursor: pointer;;color:#c7a780"
+                        id="aboutus">
+                        关于我们
+                        <img src="css/inbtn.png">
+                    </div>
+                    <div style="text-align:center;text-indent:0;cursor: pointer;background:#858585;color:#deae71" onclick="logout()">退出登录</div>
+                </div>
+            </div>
+            <!-- 地址簿 -->
+            <div id="dzb" style="width:100%;height:100%;display: none;position: absolute; top: 0px; left: 0;">
+                <div style="color: #c7a780; line-height: 70px; font-size: 25px; text-align: center;" class="dzbtop">
+                    <img style="float:left;margin:17px;" src="css/back.png" id="dzbback">
+                    <span style="padding-left:50px;">地址簿</span>
+                    <span style="float:right;margin-right:10px;font-size:15px;color:#8f8f8f" id="histadd">历史收款地址</span>
+                </div>
+                <div style="width: 97%; height: 712px; border-radius: 27px; background: url(css/minebg.png) no-repeat;padding-top:35px;"
+                    id="dzbbox">
+
+                    <!-- <div id="fjeoj"></div> -->
+                </div>
+                <div style="width: 97%; height: 712px; border-radius: 27px; background: url(css/minebg.png) no-repeat;position: absolute; top: 67px; left: 7px;color: #bebbbb; line-height: 712px; text-align: center; font-size: 30px;display:none"
+                    id="dzbboxk">
+                    暂无内容
+                </div>
+                <!-- 添加地址 -->
+                <div id="tjdzb" style="width:100%;height:100%;display: none;position: absolute; top: 0px; left: 0;">
+                    <div style="color: #c7a780; line-height: 70px; font-size: 25px; text-align: center;" class="tjdzbtop">
+                        <img style="float:left;margin:17px;" src="css/back.png" id="tjdzbback">
+                        <span>添加地址</span>
+                    </div>
+                    <div style="width: 97%; height: 712px; border-radius: 27px; background: url(css/minebg.png) no-repeat;text-align:center;"
+                        id="tjdzbbox">
+                        <!-- <select class="select2_test" style="width: 367px; text-align-last: left; height: 68px; border: 2px solid #c7a780; background: #1F1F1F; font-size: 24px; text-indent: 10px; margin: 31px auto; color: #c7a780;">
+                            <option value="币种">币种</option>
+                            <option value="css/eoslogo.png">EOS</option>
+                            <option value="css/aigaclogo.png">AIGT</option>
+                        </select> -->
+                        <ul id="select">
+                            <li>
+                                <div class="select-head">
+                                    <span style="float:left;font-size:25px;" class="huobi">货币</span>
+                                    <span class="select-head-cont"></span>
+                                    <!-- <span class="select-icon">▼</span> -->
+                                    <img style="float: right; padding-top: 19px;  -webkit-transform-origin: 24px 8px;"
+                                        src="css/inbtn.png">
+                                </div>
+                                <ul class="option">
+                                    <li style="display:none;" class="option-item"></li>
+                                    <li class="option-item"><img style="width:110px;height:60px;" src="css/eoslogo.png"></li>
+                                    <li class="option-item"><img style="width:110px;height:60px;" src="css/aigaclogo.png"></li>
+                                    <li class="option-item"><img style="width:110px;height:60px;" src="css/eoslogo.png"></li>
+                                    <li class="option-item"><img style="width:110px;height:60px;" src="css/aigaclogo.png"></li>
+                                </ul>
+
+                            </li>
+                        </ul>
+                        <input style="width: 367px; text-align-last: left; height: 68px; border: 2px solid #c7a780; background: #1F1F1F; font-size: 24px; text-indent: 10px; margin: 49px auto; color: #c7a780;"
+                            type="type" id="remar" placeholder="请输入备注">
+                        <input style="width: 367px; text-align-last: left; height: 68px; border: 2px solid #c7a780; background: #1F1F1F; font-size: 24px; text-indent: 10px; margin: 49px auto; color: #c7a780;"
+                            type="type" id="tjaddress" placeholder="请输入地址">
+                        <img style="position: absolute; top: 447px; left: 374px; height: 29px;" id="click_ewm" src="css/erweima.png">
+                        <button style="width: 370px; height: 65px; background: #b3966f; border: none; color: #020202; font-size: 22px; border-radius: 7px; margin-top: 158px;"
+                            id="click_btn">确认</button>
+                        <!-- <img id="tjimg" src="" style="position: absolute; top: 113px; left: 70px; z-index: 999; width: 83px; height: 41px;"> -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 转账 -->
+            <!-- <div id="transfer" style="width:100%;height: 100%;position:absolute;left:0;top:0;background:#4F4E4E;display:none;z-index: 3">
+                 <div id="transfertop" style="width:100%;height: 70px;position:absolute;top:0;background:url(css/banner_bg_common.png) no-repeat">
+                   
+                    <div class="transferbtn" style="background:url(css/back.png) no-repeat;height:40px;margin:15px;color:#C7A780;font-size:28px;text-align: center;">AIGT转账</div>
+                    <img src="css/erweima.png" style="float: right; margin-right: 10px; margin-top: -52px; height: 35px;">
+                </div>
+                <div id="addressBox" style="width: 97%; height: 128px; margin-top: 74px; background: url(css/transfer_bg.png) no-repeat; background-size: 466px;">
+                    <input type="type" id="addres" placeholder="收款人钱包地址">
+                </div> 
+               
+                <div id="numBox" style="width: 97%; height: 196px; margin-top: 4px; background: url(css/transfer_bgb.png) no-repeat; background-size: 466px;color:#A3A3A3">
+                    <span style="margin: 35px; line-height: 40px; font-size: 22px;" >AIGT</span>
+                    <span id="balance" style="margin-right: 11px; float: right; line-height: 40px; font-size: 22px;" >余额：23133.99</span><br>
+                    <input type="type" id="balanceAddres" placeholder="输入转账金额">
+                    <button id="balancebtn" style="">全部</button>
+                    <span id="balance" style="float: left; font-size: 20px; color: #C7A780; margin-left: 43px; line-height: 0px;" >备注:Memo</span><br>
+                </div>  -->
+            <!-- 输入密码 -->
+            <!-- <div id="passBox" style="width: 97%; height: 372px; margin-top: 4px; background: #383838; color: #C3A47E; border-radius: 15px;text-align:center">
+                    <div id="passtop">
+                        <img id="passback" src="css/back.png" alt="">
+                        <span>输入密码</span><br>
+                    </div>
+                    <span id="balance" style="font-size: 20px;color: #C7A780;margin-left: -305px;line-height: 80px;" >输入钱包密码</span><br>
+                    <input type="password" id="password" placeholder="密码"><br>
+                    <button id="forgetbtn" style="">忘记密码</button>
+                </div>
+                <div id="select" style="background: #C7A780; width: 100%; height: 54px; position: relative; text-align: center; font-size: 23px; line-height: 54px; z-index: 9999; bottom: 50px;">确认</div>  -->
+            <!-- </div> -->
+            <!-- 收账 -->
+            <!-- <div id="collection" style="width:100%;height: 100%;position:absolute;left:0;top:0;background:#4F4E4E">
+                 <div id="collectop" style="width:100%;height: 70px;position:absolute;top:0;background:url(css/banner_bg_common.png) no-repeat">
+                    <! 返回按钮 -->
+            <!-- <div class="collectbtn" style="background:url(css/back.png) no-repeat;height:40px;margin:15px;color:#C7A780;font-size:28px;text-align: center;">收款</div> -->
+            <!-- <img src="css/erweima.png" style="float: right; margin-right: 10px; margin-top: -52px; height: 35px;"> -->
+            <!-- </div>
+                <div id="addressBox" style="width: 97%; height: 128px; margin-top: 74px; background: url(css/transfer_bg.png) no-repeat; background-size: 466px;">
+                    <input type="type" id="addres" placeholder="收款人钱包地址">
+                </div>  -->
+            <!-- 转金额 -->
+            <!-- <div id="numBox" style="width: 97%; height: 196px; margin-top: 4px; background: url(css/transfer_bgb.png) no-repeat; background-size: 466px;color:#A3A3A3">
+                    <span style="margin: 35px; line-height: 40px; font-size: 22px;" >AIGT</span>
+                    <span id="balance" style="margin-right: 11px; float: right; line-height: 40px; font-size: 22px;" >余额：23133.99</span><br>
+                    <input type="type" id="balanceAddres" placeholder="输入转账金额">
+                    <button id="balancebtn" style="">全部</button>
+                    <span id="balance" style="float: left; font-size: 20px; color: #C7A780; margin-left: 43px; line-height: 0px;" >备注:Memo</span><br>
+                </div>  -->
+            <!-- 输入密码 -->
+            <!-- <div id="passBox" style="width: 97%; height: 372px; margin-top: 4px; background: #383838; color: #C3A47E; border-radius: 15px;text-align:center">
+                    <div id="passtop">
+                        <img id="passback" src="css/back.png" alt="">
+                        <span>输入密码</span><br>
+                    </div>
+                    <span id="balance" style="font-size: 20px;color: #C7A780;margin-left: -305px;line-height: 80px;" >输入钱包密码</span><br>
+                    <input type="password" id="password" placeholder="密码"><br>
+                    <button id="forgetbtn" style="">忘记密码</button>
+                </div>
+                <div id="select" style="background: #C7A780; width: 100%; height: 54px; position: relative; text-align: center; font-size: 23px; line-height: 54px; z-index: 9999; bottom: 50px;">确认</div>   -->
+            <!-- </div> -->
+
+        </div>
+    </div>
+</body>
+<script src="js/html2canvas.min.js"></script>
+<script src="js/qrcode.min.js"></script>
+
+<script src="js/jquery-2.1.1.js"></script>
+<script src="js/jex.js"></script>
+<script src="js/db.js"></script>
+<script src="js/debug.js"></script>
+<script src="bundle.js"></script>
+<script src="eosdata.js"></script>
+<script src="ui.js"></script>
+
+</html>
