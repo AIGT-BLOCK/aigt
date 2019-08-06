@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh">
+
 <head>
     <meta charset="UTF-8">
     <meta content="width=480px,target-densitydpi=high-dpi,  user-scalable=no" name="viewport" id="viewport">
@@ -9,345 +10,924 @@
     <meta http-equiv="keywords" content="eos,wallet,AIGT">
     <meta http-equiv="description" content="the wallet of AIGT">
     <link rel="icon" type="image/png" href="css/favicon.png">
-    <link rel="stylesheet" href="css/index.css">  
-    <script src="https://cdn.scattercdn.com/file/scatter-cdn/js/latest/scatterjs-core.min.js"></script>
-    <script src="https://cdn.scattercdn.com/file/scatter-cdn/js/latest/scatterjs-plugin-eosjs.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://wx.leemai.cn/a/css/index.css"> -->
+    <link rel="stylesheet" href="http://wx.leemai.cn/a/css/index.css">
+
+
+
+    <script src="http://developer.mathwallet.org/sample01/js/scatter.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/eosjs@16.0.8/lib/eos.min.js"></script>
-    <title>AIGT wallet</title>
+    <title>AIGT 智游链</title>
 </head>
 
 <body>
-    <div style="z-index:99999;display:none;height:100%;position:absolute;top:0;left:0;width:100%" id=iframediv >
-   		 <div id=iframemenu style="height:60px"></div> 
-         <div id=iframed style="height:100%;"></div> 
+    <div style="z-index:99999;display:none;height:100%;position:absolute;top:0;left:0;width:100%;background:#222" id=iframediv>
+        <div id=iframemenu style="height:40px"></div>
+        <div id=iframed style="height:100%;"></div>
     </div>
-    <div class="maindiv" id="maindiv"> 
-        <div class="bottom-menu"><div id=menu style="width: 350px; height:70px" ></div></div>
+    <div style="z-index: 100;width: 100%;position: fixed;bottom: 0px;height: 70px;background-image: url(css/bottom_menu_bg_common.png);">
+        <div id=menu style="width: 420px; height:70px"></div>
+    </div>
+    <div id="maindiv" style="max-width:900px">
 
-        <div class="pages-container">
-            <div id="minepool" class="page">
-                <div  style="height: 70px; background: url('css/banner_bg_common.png');"> 
-                    <div style="background-image: url('css/favicon.png');height: 60px;width: 60px; margin:5px;background-size: 100% 100%;float: left;"></div>
-                        
-                     
-                    <div   style="float: left;padding:5px">
-                        <div id="accountName" style="height:30px;margin-top: 8px;  color: #c0a17b;cursor:pointer"  onclick="setAccount(1)">输入帐号</div>
-                        <div class="accountstate" style="height:30px; font-size:12px">正在连接钱包...</div>
-                      
-                    </div>
-                     <div id=topmenu style="position:absolute;right:30px;top:17px;"></div>
+        <div id="minepool" style="background: #292929;">
+
+
+            <div style="width: 100%; position: relative; height:300px;background: url(css/eostop.png) no-repeat; background-size:100% 300px;">
+                <!-- 顶部栏 -->
+                <div style="padding: 5px 35px;    width: 130px; float: left;">
+                    <div class="accountName" id=accountName style="width:245px;height:30px;margin-top: 8px;  color: #111;cursor:pointer"
+                        onclick="AIGTsetAccount(1)"> </div>
+                   
+
                 </div>
-                <div class="scrollView" style="width: 95%;">
+                <div id=topmenu style="position:absolute;right:30px;top:17px;"></div>
+                <!-- 首页logo -->
+                <div style="background: url(css/logo_new.png) no-repeat; height: 76px; width: 160px; background-size: 100%;position: absolute; left: 28px; top: 202px;"
+                    onClick="$j('#moreinfo').show()"></div>
+                <img style="height: 68px; position: absolute; top: 83px; left: 305px;" src="css/eos_logo.gif">
+                <div class="shadowimg" style="background: url(css/pri.png) no-repeat; width: 190px; height: 60px; position: absolute; right: 3%; top: 170px; background-size: 77%;"></div>
+                <div class="shadow cent" style="    width: 210px;   position: absolute; right:4%; top: 236px; font-size: 26px;  "
+                    argn="eosprize" prefix="EOS奖金池：">
 
-                    <div class="assets-container" style="height: 140px; ">
-                        <div class="asset" id="div_EOS">
-                            <div class="token-container" style="background-image: url('css/eos_icon.png')"></div>
-                            <div style="top:8px;" class="value">0</div>
-                           
-                            <div class="title" onclick="mining()" style="right: 5px;width: 65px;position: absolute;cursor:pointer">
-                                采矿
-                            </div>
+                </div>
+
+            </div>
+          
+            <div style="width: 100%;   height: 412px;   background: url(css/bgb.png) no-repeat; background-size: 100%; z-index: 0;">
+                <!-- 文本一 -->
+                <div style="height:140px">
+                    <div class="text">EOS基金池用于回购并销毁AIGT，确保AIGT的价值。投票时选择"投票并兑奖"，持有原矿越多兑率越高。</div>
+                    <div style="background: url(css/eosfund.png) no-repeat; background-size: 100%; height: 120px;width:220px; padding-top:47px;line-height: 30px;margin-right:4%">
+                        <div class="shadow cent" argn="eosfund" prefix="">
+                            <div class="loading"></div>
+
                         </div>
-                        <div class="asset" id="div_AIGT">
-                            <div class="token-container" style="background-image: url('css/a.png')">  </div>
-                            <div style="top:8px;" class="value">0</div>                            
-                            <div style="float: right; line-height:20px; margin: 10px;" class="locked">0</div>
-                        </div>
                     </div>
-                    <div class="poolinfo-container">
-                        <div class="poolinfo" argn="eosprize" prefix="EOS奖金池：">加载中...</div>
-                        <div class="poolinfo" argn="eosfund" prefix="EOS基金池：">加载中...</div>
-                        <div class="poolinfo" argn="prize" prefix="原矿奖金池：">加载中...</div>
-                        <div class="poolinfo" argn="mine"  prefix="待开原矿池：">加载中... </div>
-                        <!-- <div style="left: 267px; top: -48px; color:#aaa; border: none; font-size: 12px;pointer-events: none;"
-                            class="poolinfo" argn="mined" prefix="已开采：">加载中...</div> -->
-                    </div>
-                <!-- 排行榜 -->
-                <div class="leader-board">
 
-                    <div class="title0">
-                        <span>等级</span>
-                        <span>账户</span>
-                        <span>已锁仓排行</span>
+                </div>
+
+                <div style="height:140px;position:relative">
+                    <div class="text">原矿池，用户获得AIGT和其原矿的主要途径。</div>
+                    <div id=btnmining> </div>
+
+                    <div style="background:url(css/eosprize.png) no-repeat;background-size: 100%; height: 90px;width:220px;padding-top:47px;line-height: 30px;margin-right:4%">
+                        <div class="shadow cent" argn="mine" prefix="">
+                            <div class="loading"> </div>
+                        </div>
+                        <div style="color:#000;text-align:center;line-height: 35px">总量 : 5,000,000,000</div>
                     </div>
-                    <div style="overflow: auto;height:215px;" id=rankdiv> </div>
                 </div>
+                <div style="height:140px">
+                    <div class="text">原矿奖金池和EOS奖金池，都用于奖励生态贡献者。贡献者通过参赛成为候选人，获胜后即可领奖。</div>
+                    <div style="background:url(css/prize.png) no-repeat;background-size: 100%; height:90px;width:220px;padding-top:47px;line-height: 30px;margin-right:4%">
+                        <div style="line-height: 23px" class="shadow cent" argn="prize" prefix="">
+                            <div class="loading"> </div>
+                        </div>
+                        <div style="color:#000;text-align:center;line-height: 45px">总量 : 4,000,000,000</div>
+                    </div>
+
                 </div>
+            </div>
 
  
-                
-                <!-- 采矿 -->
-                <div class="miningbox" id="miningbox" style="height:780px;">
-                    <!-- 采矿顶部 -->
-                    <div class="miningtitle">
-                        <img onclick="miningbox_back()" style="cursor:pointer" id="miningbox_back" src="css/back.png">
-                        <span>采矿</span>
-                        <img id="miningbox_btn" src="css/pull_btn_common.png">
-                    </div>
-                    <!-- 采矿详情框 -->
-                    <div  id="miningdebox">
-                         <div class="miningitem" style="margin-bottom:15px" >完全由智能合约实现，实时到您的钱包。</div>
-                        <div id="refeBox" style="width: 404px;height: 120px;"> </div>
-                       
-                        <div style="border:none" class="cent" id="miningitem"></div>
-                      
-                        <div class="miningitem cent" style="background: #b08f66;cursor:pointer;color:#222;"
-                            onclick="digmine()">确定</div>
 
-                    </div>
-                    
-                                    <!-- 采矿详情 -->
+            <!-- 排行榜 -->
+            <div id=btnrank style="width: 120px;height:35px"></div>
+            <div id=divrank style="padding: 10px;display: none">
+                <div id=moreinfo style="display:none"></div>
+                <div class="title0">
+                    <span>等级</span>
+                    <span>账户</span>
+                    <span style="margin-left:55px;">原矿</span>
+                </div>
+                <div style="overflow-y: auto;overflow-x: hidden;height:515px;" id=rankdiv>                   
+                    <div class="loading"> </div>
+                </div>
+            </div>
+
+            <div style="height:200px"></div>
+
+
+            <!-- 采矿 -->
+            <div class="miningbox" id="miningbox" style="height:780px;z-index: 3">
+                <!-- 采矿顶部 -->
+                <div class="miningtitle">
+                    <img onclick=" $j('#miningbox').hide()" style="cursor:pointer" id="miningbox_back" src="css/back.png">
+                    <span>采矿</span>
+                    <img id="miningbox_btn" src="css/pull_btn_common.png">
+                </div>
+                <!-- 采矿详情框 -->
+                <div id="miningdebox">
+                    <div class="miningitem" style="margin-bottom:15px">完全由智能合约实现，实时到您的钱包。</div>
+                    <div id=miningremark style="line-height: 40px;top: 228px;z-index: 1;position: absolute;left: 200px;width: 210px;"></div>
+                    <div id="refeBox" style="width: 404px;height: 180px;"> </div>
+
+                    <div style="border:none" class="cent" id="miningitem"></div>
+
+                    <div class="miningitem cent" style="background: #b08f66;cursor:pointer;color:#222;" onclick="digmine()">确定</div>
+
+                </div>
+
+                <!-- 采矿详情 -->
                 <div class="mining">
                     <div class="title_0">
                         采矿详情
                     </div>
                     <div class="title0_0">
-                        <span>账户</span>
-                        <span>采矿额</span>
-                        <span>获得</span>
+                        <span>日期</span>
+                        <span style="padding-left:35px;">采矿额</span>
+                        <!-- <span>原矿余额</span> -->
                     </div>
-                    <div  style="overflow: auto;height:215px;" id=mydigminediv> </div>
-                        
-                    </div>
-                </div>
+                    <div style="overflow: auto;height:215px; width: 100%;overflow-x: hidden;" id=mydigminediv class="loading"> </div>
+
                 </div>
             </div>
-            
-             <!-- 推广 -->
-                <div id="promotion" style="display:none;position:absolute;top:0px;left:0;width:100%;background:#1f1f1f">
-                    <div id="topti" style="width: 100%; height: 70px; text-align: center; position: relative; z-index: 99999;">
-                        <!--<div style="width: 50%; height: 40px; text-align: center; font-size: 30px; background: #B3966F;float:left;line-height:40px" onclick="copy()">复制链接</div><div style="width: 50%; height: 40px; text-align: center; font-size: 30px; background: red;float:left;line-height:40px">关闭</div>-->
-                    </div>
-                    <div id=sharediv style="background:#1f1f1f;padding:6px">
-                        <div id="invitebox" style="height: 140px; width: 97%; border-radius: 10px; background: #3C3C3C;"></div>
-                        <div id="fribox" style="height: 565px; width: 97%; margin-top: 8px;background:url(css/boxkbg.png) no-repeat;background-size:100% 100%">
-                            <div style="color:#b08f66; padding: 15px;font-size: 22px; " >
-                                激情一夏，邀请伙伴无上限，奖励返佣不封顶，PK你的伙伴的原矿数，最高获得20% EOS奖励，月入百万不是梦<br> 特性：<br>1. 全智能合约实现，推荐销售奖励秒到钱包<br>2.
-                                高达20% EOS 销售奖励<br>3. 采矿推广两不误，原矿任性采
-                            </div>
-                            <div style="width: 100%; height: auto;">
-                                <p style="text-align:left" id="refnum"><span style="float:right;color:#B1B1B1" id="firosnum"></span></p><br>
-                                <div id="divqrcode" style="position:absolute;width:100px;height:100px;top: 560px; left: 190px;"></div>
-                            </div>
+        </div>
+
+
+        <!-- 推广 -->
+        <div id="promotion" style="display:none;top:0px;left:0;width:100%;background:#1f1f1f">
+            <div id="topti" style="width: 100%; height: 50px; background:#eee;   position: absolute;top:0; z-index: 99999;">
+                <!--<div style="width: 50%; height: 40px; text-align: center; font-size: 30px; background: #B3966F;float:left;line-height:40px" onclick="copy()">复制链接</div><div style="width: 50%; height: 40px; text-align: center; font-size: 30px; background: red;float:left;line-height:40px">关闭</div>-->
+            </div>
+
+            <!-- 截图层 -->
+
+            <div id="capturediv" style="position:absolute;top:50px;width:100%;height:849px;z-index: 99;display:block; background:#000">
+                <div id=sharediv style="background:url(css/zyl.jpg) no-repeat;background-size: 100% 100%;height:700px"
+                    class="shadow">
+                    <div id="invitebox" style="height: 88px; width: 77%; padding-top: 79px; color:#fff;font-size:22px">邀请好友，瓜分EOS奖池<br>8月8日登陆goko交易所</div>
+                    <div id="fribox" style="height: 495px; width: 97%;  position: absolute; top:360px ">
+						 <div class="accountName cent x_b___fff"></div>	
+                        <div id="divqrcode" style=" width:120px;height:120px;top: 560px; left: 190px; background:#fff;padding:5px"></div>
+
+                        <div style="color: #eee; padding: 25px; font-size: 19px; ">
+                            激情一夏，邀请伙伴无上限，奖励返佣不封顶，PK你的伙伴的原矿数，最高获得30% EOS奖励，财富自由不是梦<br> 1. 全智能合约实现，推荐销售奖励秒到钱包<br>2.
+                            原矿比=您的原矿/被推荐人的原矿 （<=1）<br>3. 采矿推广两不误，原矿任性采
                         </div>
+
                     </div>
-               </div>
-            <!-- 投票 -->
-            <div id="votepage" class="page" style="display:none"  >
-                <div id="votemenu" style="height:60px;padding-left:35px;background:url(css/banner_bg_common.png) no-repeat">
-                </div>
-                 
-                <div id="votelist" style="height:auto;overflow: auto;"> 加载中... </div>
-
-                <!-- 解锁 -->
-                <div id="unlock" style="display:none">
-                    <div id="unlockCoeff" style="height: 140px; width: 97%; border-radius: 10px; background: #3C3C3C;"></div>
-                    <div id="unlockRecord" style="height: 565px; width: 97%; margin-top: 8px;background:url(css/boxkbg.png) no-repeat;background-size:100% 100%">历史记录</div>
-                </div>
-
-
-                <!-- 投票详情 -->
-                <div id="votedetail" style="width:100%;height:100%;position:absolute;background:#383838;display:none;z-index:9999;overflow:hidden;top:0;">
-                    <div style="width: 100%; height: 60px;border-radius:10px 10px 0 0;background:#444444; color: #b3966f; font-size: 22px; line-height:50px;">
-                        <img src="css/back.png" onclick="votebackbtn()" style="float:left;margin:10px; cursor: pointer;" />
-                        <span id=votefrom style="float:left; width: 400px">投票详情</span>
-                        <div id=votemenus style="float: right; width: 90px" ></div>
-                    </div>
-                    <div id="voteinfo" style="height:60px;padding-left:40px ;"></div>
-                    <div id="votes" style="height:100%"></div>
-                    <div style="position:absolute;bottom:0;width:100%;border-top:1px solid #eee; background: #3F3F3F ">
-                        <div id="voteradi"></div>
-                        <input id="vote"  style="width: 230px; float:left; height: 35px; background: none; border: 1.5px solid #86745D; color: #C1A27D; font-size: 22px; text-indent: 14px;margin-left:40px"
-                            type="text" placeholder="请输入AGC数量"> <div id="voteSubmit" style="width:21%; height: 60px;float:right;margin-right:20px" ></div> <br>
-                        <div id=memodiv style="margin-left:40px"></div><br>
-                        
-                    </div>
-                </div>
-
-            </div>
-            <!-- 发现 -->
-            <div id="find" class="page" style="display:none">
-                <!-- <div id="findtitle" style="height:70px;padding-left:35px;background:url(css/banner_bg_common.png) no-repeat;display:none;">    </div> -->
-                <div id="findbox" style="margin-top:4px;">
-                   
                 </div>
             </div>
-            <!-- 我的 -->
-            <div id="mine" style="width:100%;height:100%;display: none;overflow:hidden;">
-                <div style="color: #c7a780; line-height: 25px; font-size: 20px; text-align: center;" class="minebanner"
-                    id="minebanner">
-                    <div style="" id="records">
+        </div>
+        <!-- 投票 -->
+        <div id="votepage" style="display:none">
+            <div id="votemenu" style="height:60px;padding-left:35px;background:url(css/banner_bg_common.png) no-repeat">
+            </div>
 
-                    </div>
+            <div id="votelist">
+                <!-- 投票加载 -->
+                <div class="loading2">
+                    
                 </div>
-                <div style="width: 97%; height: 712px; border-radius: 27px; background: url(css/minebg.png) no-repeat;"
-                    id="minebox">
-                    <!--<div style="margin-top: 35px; background: url(css/addres.png) no-repeat; background-position: 35px 18px; background-size: 6%;"
+            </div>
+
+            <!-- 解锁 -->
+            <div id="unlock" style="display:none">
+                <div id="unlockCoeff" style="height: 140px; width: 97%; border-radius: 10px; background: #3C3C3C;"></div>
+                <div id="unlockRecord" style="height: 565px; width: 97%; margin-top: 8px;background:url(css/boxkbg.png) no-repeat;background-size:100% 100%">历史记录</div>
+            </div>
+        </div>
+
+        <!-- 投票详情 -->
+        <div id="votedetail" style="width:100%;background:#383838;display:none;">
+            <div style="width: 100%; height: 60px;border-radius:10px 10px 0 0;background:#444444; color: #b3966f; font-size: 22px; line-height:50px;">
+                <img src="css/back.png" onclick="votebackbtn()" style="float:left;margin:10px; cursor: pointer;" />
+                <span id=votefrom style="float:left; width: 400px">投票详情</span>
+                <div id=votemenus style=" position: absolute;right: 20px; width: 90px"></div>
+            </div>
+            <div id="voteinfo" style="height:75px;padding-left:30px ;"></div>
+            <div id="votes" style="height:100%"></div>
+            <div style="position:fixed;bottom:60px;width:100%;border-top:1px solid #eee; background: #3F3F3F;max-width:900px">
+                <div id="voteradi"></div>
+                <input id="vote" style="width: 150px; float:left; height: 35px; background: #111; border: 1.5px solid #86745D; color: #C1A27D; font-size: 18px; text-indent: 14px;margin-left:20px"
+                    type="text" placeholder="请输入AIGT数量">
+                <div id="div_AIGT" style="width:33%; height: 40px;float:left;line-height:36px"></div>
+                <div id="voteSubmit" style="width:21%; height: 40px;float:right;margin-right:20px"></div> <br>
+                <div id=memodiv style="margin-left:20px;margin-top:35px;color:#fff;font-size:15px"></div><br>
+
+            </div>
+        </div>
+
+
+        <!-- 发现 -->
+        <div id="find" style="display:none;padding: 10px;background-color: #000;">
+            <!-- <div id="findtitle" style="height:70px;padding-left:35px;background:url(css/banner_bg_common.png) no-repeat;display:none;">    </div> -->
+            <div id="banp" style="height:228px;width:400px"></div>
+            <div id="findtitle" style="height:58px;"></div>
+            <div style=" height:70px;font-size: 15px;color: white;background:url(http://wx.leemai.cn/a/css/yx.png) no-repeat;background-size:100% 100%;margin-top:10px"></div>
+            <div id="gamearea"></div>
+            <div style=" height:70px;font-size:15px;color: white;background:url(http://wx.leemai.cn/a/css/sq.png) no-repeat;background-size:100% 100%;margin-top:10px"></div>
+            <div id="communityarea"></div>
+            <div style="height:70px;font-size:15px;color: white;background:url(http://wx.leemai.cn/a/css/mt.png) no-repeat;background-size:100% 100%;margin-top:10px"></div>
+            <div id="mediaarea"></div>
+        </div>
+        <!-- 我的 -->
+        <div id="mine" style="width:100%;height:100%;display: none;overflow:hidden;padding: 10px;box-sizing: border-box;">
+            <div style="color: #c7a780; line-height: 25px; font-size: 20px; text-align: center;" class="minebanner" id="minebanner">
+                <p style="font-size:17px;color:#c7a780" class="accountName" onclick="funcopy()"></p>
+                <p style="color:#c7a780;line-height:6px;font-size:14px" class="publicKey" onclick="funcopy()"></p>
+            </div>
+            <div class="assets-container" style="height: 140px; ">
+                <div class="asset">
+                    <div class="token-container" style="background-image: url('css/eos_icon.png')"></div>
+                    <div class="div_EOS value"> </div>
+
+                </div>
+                <div class="asset">
+                    <div class="token-container" style="background-image: url('css/aigt_logo.png')"> </div>
+                    <div class="div_AIGT value"> </div>
+                    <div style="float: right; line-height:20px; margin: 15px;" class="locked">0</div>
+                </div>
+            </div>
+
+            <div style="height:100px" id="refnum"> </div>
+            <div style="padding:20px" class="cent"> 点下方“邀请伙伴”，将二维码图保存，并分享给好友。<br>原矿比=您的原矿/伙伴的原矿（<=1）</div>
+            <div style="width: 97%; height: 712px; border-radius: 27px;  " id="minebox">
+                <!--<div style="margin-top: 35px; background: url(css/addres.png) no-repeat; background-position: 35px 18px; background-size: 6%;"
                         id="addressbok">
                         地址簿
                         <img src="css/inbtn.png">
                     </div>-->
-                    <div style="background: url(css/hbxz.png) no-repeat; background-position: 35px 21px; background-size:30px;cursor: pointer;color:#c7a780"
-                        id="currency">
-                        货币选择
-                        <img src="css/inbtn.png">
-                    </div>
-                    <div style="background: url(css/version.png) no-repeat; background-position: 35px 18px; background-size: 30px;cursor: pointer;;color:#c7a780"
-                        id="versionb">
-                        版本升级
-                        <img src="css/inbtn.png">
-                    </div>
-                    <div style="background: url(css/ques.png) no-repeat; background-position: 35px 18px; background-size: 30px;cursor: pointer;;color:#c7a780"
-                        id="ques">
-                        问题反馈
-                        <img src="css/inbtn.png">
-                    </div>
-                    <div style="background: url(css/message.png) no-repeat; background-position: 35px 21px; background-size: 30px;cursor: pointer;;color:#c7a780"
-                        id="message" onclick="message()">
-                        社群信息
-                        <img src="css/inbtn.png">
-                    </div>
-                    <div style="background: url(css/aboutus.png) no-repeat; background-position: 35px 21px; background-size: 30px;cursor: pointer;;color:#c7a780"
-                        id="aboutus">
-                        关于我们
-                        <img src="css/inbtn.png">
-                    </div>
-                    <div style="text-align:center;text-indent:0;cursor: pointer;background:#858585;color:#deae71" onclick="logout()">退出登录</div>
+                <div style="background: url(css/hbxz.png) no-repeat; background-position: 35px 21px; background-size:30px;cursor: pointer;color:#c7a780"
+                    id="currency" onClick="funpromotion()">
+                    邀请伙伴
+                    <img src="css/inbtn.png">
                 </div>
-            </div>
-            <!-- 地址簿 -->
-            <div id="dzb" style="width:100%;height:100%;display: none;position: absolute; top: 0px; left: 0;">
-                <div style="color: #c7a780; line-height: 70px; font-size: 25px; text-align: center;" class="dzbtop">
-                    <img style="float:left;margin:17px;" src="css/back.png" id="dzbback">
-                    <span style="padding-left:50px;">地址簿</span>
-                    <span style="float:right;margin-right:10px;font-size:15px;color:#8f8f8f" id="histadd">历史收款地址</span>
-                </div>
-                <div style="width: 97%; height: 712px; border-radius: 27px; background: url(css/minebg.png) no-repeat;padding-top:35px;"
-                    id="dzbbox">
 
-                    <!-- <div id="fjeoj"></div> -->
+                <div style="background: url(css/ques.png) no-repeat; background-position: 35px 18px; background-size: 30px;cursor: pointer;;color:#c7a780"
+                    id="ques" onclick='ques("aigtblock@gmail.com")'>
+                    问题反馈
+                    <img src="css/inbtn.png">
                 </div>
-                <div style="width: 97%; height: 712px; border-radius: 27px; background: url(css/minebg.png) no-repeat;position: absolute; top: 67px; left: 7px;color: #bebbbb; line-height: 712px; text-align: center; font-size: 30px;display:none"
-                    id="dzbboxk">
-                    暂无内容
+                <div style="background: url(css/message.png) no-repeat; background-position: 35px 21px; background-size: 30px;cursor: pointer;;color:#c7a780"
+                    id="message" onclick="message()">
+                    社群信息
+                    <img src="css/inbtn.png">
                 </div>
-                <!-- 添加地址 -->
-                <div id="tjdzb" style="width:100%;height:100%;display: none;position: absolute; top: 0px; left: 0;">
-                    <div style="color: #c7a780; line-height: 70px; font-size: 25px; text-align: center;" class="tjdzbtop">
-                        <img style="float:left;margin:17px;" src="css/back.png" id="tjdzbback">
-                        <span>添加地址</span>
-                    </div>
-                    <div style="width: 97%; height: 712px; border-radius: 27px; background: url(css/minebg.png) no-repeat;text-align:center;"
-                        id="tjdzbbox">
-                        <!-- <select class="select2_test" style="width: 367px; text-align-last: left; height: 68px; border: 2px solid #c7a780; background: #1F1F1F; font-size: 24px; text-indent: 10px; margin: 31px auto; color: #c7a780;">
+
+                <div style="background: url(css/version.png) no-repeat; background-position: 35px 18px; background-size: 30px;cursor: pointer;;color:#c7a780"
+                    id="versionb" onclick=_local('http://www.aigt.club')> 官方网站 <img src="css/inbtn.png">
+                </div>
+
+                <div style="text-align:center;text-indent:0;cursor: pointer;background:#222;color:#deae71" onclick="logout()">退出登录</div>
+            </div>
+        </div>
+        <!-- 地址簿 -->
+        <div id="dzb" style="width:100%;height:100%;display: none;position: absolute; top: 0px; left: 0;">
+            <div style="color: #c7a780; line-height: 70px; font-size: 25px; text-align: center;" class="dzbtop">
+                <img style="float:left;margin:17px;" src="css/back.png" id="dzbback">
+                <span style="padding-left:50px;">地址簿</span>
+                <span style="float:right;margin-right:10px;font-size:15px;color:#8f8f8f" id="histadd">历史收款地址</span>
+            </div>
+            <div style="width: 97%; height: 712px; border-radius: 27px; background: url(css/minebg.png) no-repeat;padding-top:35px;"
+                id="dzbbox">
+
+                <!-- <div id="fjeoj"></div> -->
+            </div>
+            <div style="width: 97%; height: 712px; border-radius: 27px; background: url(css/minebg.png) no-repeat;position: absolute; top: 67px; left: 7px;color: #bebbbb; line-height: 712px; text-align: center; font-size: 30px;display:none"
+                id="dzbboxk">
+                暂无内容
+            </div>
+            <!-- 添加地址 -->
+            <div id="tjdzb" style="width:100%;height:100%;display: none;position: absolute; top: 0px; left: 0;">
+                <div style="color: #c7a780; line-height: 70px; font-size: 25px; text-align: center;" class="tjdzbtop">
+                    <img style="float:left;margin:17px;" src="css/back.png" id="tjdzbback">
+                    <span>添加地址</span>
+                </div>
+                <div style="width: 97%; height: 712px; border-radius: 27px; background: url(css/minebg.png) no-repeat;text-align:center;"
+                    id="tjdzbbox">
+                    <!-- <select class="select2_test" style="width: 367px; text-align-last: left; height: 68px; border: 2px solid #c7a780; background: #1F1F1F; font-size: 24px; text-indent: 10px; margin: 31px auto; color: #c7a780;">
                             <option value="币种">币种</option>
                             <option value="css/eoslogo.png">EOS</option>
                             <option value="css/aigaclogo.png">AIGT</option>
                         </select> -->
-                        <ul id="select">
-                            <li>
-                                <div class="select-head">
-                                    <span style="float:left;font-size:25px;" class="huobi">货币</span>
-                                    <span class="select-head-cont"></span>
-                                    <!-- <span class="select-icon">▼</span> -->
-                                    <img style="float: right; padding-top: 19px;  -webkit-transform-origin: 24px 8px;"
-                                        src="css/inbtn.png">
-                                </div>
-                                <ul class="option">
-                                    <li style="display:none;" class="option-item"></li>
-                                    <li class="option-item"><img style="width:110px;height:60px;" src="css/eoslogo.png"></li>
-                                    <li class="option-item"><img style="width:110px;height:60px;" src="css/aigaclogo.png"></li>
-                                    <li class="option-item"><img style="width:110px;height:60px;" src="css/eoslogo.png"></li>
-                                    <li class="option-item"><img style="width:110px;height:60px;" src="css/aigaclogo.png"></li>
-                                </ul>
+                    <ul id="select">
+                        <li>
+                            <div class="select-head">
+                                <span style="float:left;font-size:25px;" class="huobi">货币</span>
+                                <span class="select-head-cont"></span>
+                                <!-- <span class="select-icon">▼</span> -->
+                                <img style="float: right; padding-top: 19px;  -webkit-transform-origin: 24px 8px;" src="css/inbtn.png">
+                            </div>
+                            <ul class="option">
+                                <li style="display:none;" class="option-item"></li>
+                                <li class="option-item"><img style="width:110px;height:60px;" src="css/eoslogo.png"></li>
+                                <li class="option-item"><img style="width:110px;height:60px;" src="css/aigaclogo.png"></li>
+                                <li class="option-item"><img style="width:110px;height:60px;" src="css/eoslogo.png"></li>
+                                <li class="option-item"><img style="width:110px;height:60px;" src="css/aigaclogo.png"></li>
+                            </ul>
 
-                            </li>
-                        </ul>
-                        <input style="width: 367px; text-align-last: left; height: 68px; border: 2px solid #c7a780; background: #1F1F1F; font-size: 24px; text-indent: 10px; margin: 49px auto; color: #c7a780;"
-                            type="type" id="remar" placeholder="请输入备注">
-                        <input style="width: 367px; text-align-last: left; height: 68px; border: 2px solid #c7a780; background: #1F1F1F; font-size: 24px; text-indent: 10px; margin: 49px auto; color: #c7a780;"
-                            type="type" id="tjaddress" placeholder="请输入地址">
-                        <img style="position: absolute; top: 447px; left: 374px; height: 29px;" id="click_ewm" src="css/erweima.png">
-                        <button style="width: 370px; height: 65px; background: #b3966f; border: none; color: #020202; font-size: 22px; border-radius: 7px; margin-top: 158px;"
-                            id="click_btn">确认</button>
-                        <!-- <img id="tjimg" src="" style="position: absolute; top: 113px; left: 70px; z-index: 999; width: 83px; height: 41px;"> -->
-                    </div>
+                        </li>
+                    </ul>
+                    <input style="width: 367px; text-align-last: left; height: 68px; border: 2px solid #c7a780; background: #1F1F1F; font-size: 24px; text-indent: 10px; margin: 49px auto; color: #c7a780;"
+                        type="type" id="remar" placeholder="请输入备注">
+                    <input style="width: 367px; text-align-last: left; height: 68px; border: 2px solid #c7a780; background: #1F1F1F; font-size: 24px; text-indent: 10px; margin: 49px auto; color: #c7a780;"
+                        type="type" id="tjaddress" placeholder="请输入地址">
+                    <img style="position: absolute; top: 447px; left: 374px; height: 29px;" id="click_ewm" src="css/erweima.png">
+                    <button style="width: 370px; height: 65px; background: #b3966f; border: none; color: #020202; font-size: 22px; border-radius: 7px; margin-top: 158px;"
+                        id="click_btn">确认</button>
+                    <!-- <img id="tjimg" src="" style="position: absolute; top: 113px; left: 70px; z-index: 999; width: 83px; height: 41px;"> -->
                 </div>
             </div>
-
-            <!-- 转账 -->
-            <!-- <div id="transfer" style="width:100%;height: 100%;position:absolute;left:0;top:0;background:#4F4E4E;display:none;z-index: 3">
-                 <div id="transfertop" style="width:100%;height: 70px;position:absolute;top:0;background:url(css/banner_bg_common.png) no-repeat">
-                   
-                    <div class="transferbtn" style="background:url(css/back.png) no-repeat;height:40px;margin:15px;color:#C7A780;font-size:28px;text-align: center;">AIGT转账</div>
-                    <img src="css/erweima.png" style="float: right; margin-right: 10px; margin-top: -52px; height: 35px;">
-                </div>
-                <div id="addressBox" style="width: 97%; height: 128px; margin-top: 74px; background: url(css/transfer_bg.png) no-repeat; background-size: 466px;">
-                    <input type="type" id="addres" placeholder="收款人钱包地址">
-                </div> 
-               
-                <div id="numBox" style="width: 97%; height: 196px; margin-top: 4px; background: url(css/transfer_bgb.png) no-repeat; background-size: 466px;color:#A3A3A3">
-                    <span style="margin: 35px; line-height: 40px; font-size: 22px;" >AIGT</span>
-                    <span id="balance" style="margin-right: 11px; float: right; line-height: 40px; font-size: 22px;" >余额：23133.99</span><br>
-                    <input type="type" id="balanceAddres" placeholder="输入转账金额">
-                    <button id="balancebtn" style="">全部</button>
-                    <span id="balance" style="float: left; font-size: 20px; color: #C7A780; margin-left: 43px; line-height: 0px;" >备注:Memo</span><br>
-                </div>  -->
-            <!-- 输入密码 -->
-            <!-- <div id="passBox" style="width: 97%; height: 372px; margin-top: 4px; background: #383838; color: #C3A47E; border-radius: 15px;text-align:center">
-                    <div id="passtop">
-                        <img id="passback" src="css/back.png" alt="">
-                        <span>输入密码</span><br>
-                    </div>
-                    <span id="balance" style="font-size: 20px;color: #C7A780;margin-left: -305px;line-height: 80px;" >输入钱包密码</span><br>
-                    <input type="password" id="password" placeholder="密码"><br>
-                    <button id="forgetbtn" style="">忘记密码</button>
-                </div>
-                <div id="select" style="background: #C7A780; width: 100%; height: 54px; position: relative; text-align: center; font-size: 23px; line-height: 54px; z-index: 9999; bottom: 50px;">确认</div>  -->
-            <!-- </div> -->
-            <!-- 收账 -->
-            <!-- <div id="collection" style="width:100%;height: 100%;position:absolute;left:0;top:0;background:#4F4E4E">
-                 <div id="collectop" style="width:100%;height: 70px;position:absolute;top:0;background:url(css/banner_bg_common.png) no-repeat">
-                    <! 返回按钮 -->
-            <!-- <div class="collectbtn" style="background:url(css/back.png) no-repeat;height:40px;margin:15px;color:#C7A780;font-size:28px;text-align: center;">收款</div> -->
-            <!-- <img src="css/erweima.png" style="float: right; margin-right: 10px; margin-top: -52px; height: 35px;"> -->
-            <!-- </div>
-                <div id="addressBox" style="width: 97%; height: 128px; margin-top: 74px; background: url(css/transfer_bg.png) no-repeat; background-size: 466px;">
-                    <input type="type" id="addres" placeholder="收款人钱包地址">
-                </div>  -->
-            <!-- 转金额 -->
-            <!-- <div id="numBox" style="width: 97%; height: 196px; margin-top: 4px; background: url(css/transfer_bgb.png) no-repeat; background-size: 466px;color:#A3A3A3">
-                    <span style="margin: 35px; line-height: 40px; font-size: 22px;" >AIGT</span>
-                    <span id="balance" style="margin-right: 11px; float: right; line-height: 40px; font-size: 22px;" >余额：23133.99</span><br>
-                    <input type="type" id="balanceAddres" placeholder="输入转账金额">
-                    <button id="balancebtn" style="">全部</button>
-                    <span id="balance" style="float: left; font-size: 20px; color: #C7A780; margin-left: 43px; line-height: 0px;" >备注:Memo</span><br>
-                </div>  -->
-            <!-- 输入密码 -->
-            <!-- <div id="passBox" style="width: 97%; height: 372px; margin-top: 4px; background: #383838; color: #C3A47E; border-radius: 15px;text-align:center">
-                    <div id="passtop">
-                        <img id="passback" src="css/back.png" alt="">
-                        <span>输入密码</span><br>
-                    </div>
-                    <span id="balance" style="font-size: 20px;color: #C7A780;margin-left: -305px;line-height: 80px;" >输入钱包密码</span><br>
-                    <input type="password" id="password" placeholder="密码"><br>
-                    <button id="forgetbtn" style="">忘记密码</button>
-                </div>
-                <div id="select" style="background: #C7A780; width: 100%; height: 54px; position: relative; text-align: center; font-size: 23px; line-height: 54px; z-index: 9999; bottom: 50px;">确认</div>   -->
-            <!-- </div> -->
-
         </div>
+
+
+
+    </div>
     </div>
 </body>
-<script src="js/html2canvas.min.js"></script>
-<script src="js/qrcode.min.js"></script>
+<script src="http://wx.leemai.cn/a/js/html2canvas.min.js"></script>
+<script src="http://wx.leemai.cn/a/js/qrcode.min.js"></script>
 
-<script src="js/jquery-2.1.1.js"></script>
-<script src="js/jex.js"></script>
-<script src="js/db.js"></script>
-<script src="js/debug.js"></script>
-<script src="bundle.js"></script>
-<script src="eosdata.js"></script>
-<script src="ui.js"></script>
+<script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://wx.leemai.cn/a/js/jex.js"></script>
+<script src="http://wx.leemai.cn/a/js/db.js"></script>
+<script src="http://wx.leemai.cn/a/js/debug.js"></script>
+<script src="http://wx.leemai.cn/a/bundle.js"></script>
+
+<script src="http://wx.leemai.cn/a/api.js"></script> 
+<!-- <script src="api.js"></script> -->
+<script>
+var data = {
+    "level": ["青铜", "白银", "黄金", "铂金", "钻石", "星耀", "王者"],
+    "fname": [
+        { "name": "game01.png", "ticket": "投票结束后的优胜者在此列出"},
+        { "name": "game02.png", "ticket": "投票结束后的优胜者在此列出"}
+    ],
+
+    "lang": {
+        "e1": ["invalid quantity", "非法的数量"],
+        "e2": ["symbol precision mismatch", "符号精度不匹配"],
+        "e3": ["must transfer 0.01~20000000", "必须转移0.01~20000000"],
+        "e4": ["memo has more than 256 bytes", "备忘录超过256个字节"],
+        "e5": ["eos_quant symbol must be EOS", "eos_quant符号必须EOS"],
+        "e6": ["must transfer 1~300 EOS", "必须转1〜300EOS"],
+        "e7": ["quantity exceeds available mine_supply", "数量超过可用矿池总量"],
+        "e8": [" referrer  must be properly designated. ", "推荐人必须正确指定。"],
+        "e9": [" can not >1000 in 24 hours", "24小时内不能超过1000"],
+        "e10": ["quantity exceeds available supply", "数量超过可用供应量"],
+        "e11": ["must to==_self", "必须== _ self"],
+        "e12": ["You need to pay at least 80,000 to launch.", "您需要支付至少80,000才能启动。"],
+        "e13": ["does not exist", "不存在"],
+        "e14": ["vote not enough", "投票不够"],
+        "e15": ["must point id", "必须指向id"],
+        "e16": ["It's not time to receive the prize yet!", "现在还不是获奖的时候！"],
+        "e17": ["prize is not enough!", "赞助的奖金还不够！"],
+        "e18": ["prize is not enough!", "赞助的奖金还不够！"],
+        "e19": ["The voting time has come to an end!", "投票时间已经结束！"],
+        "e20": ["The amount must be between 10 and 100000", "数量必须介于10到100000之间"],
+        "e21": ["No more unlocking or exchange today!", "每天只能一次“提炼”或“兑奖”！"],
+        "e22": ["The voting time has come to an end!", "投票时间已经结束！"],
+        "e23": ["Have no right to modify someone else's", "没有权利修改别人的"],
+        "e24": ["Can't Receive Award Repeatedly!", "不能反复获奖！"],
+        "e25": [" overdrawn balance  locked :", "透支平衡锁定："]
+    }
+}
+
+var strloading2=`<div id="loading-center_vote">
+                        <div id="loading-center-absolute_vote">
+                            <div class="object_vote"></div>
+                            <div class="object_vote"></div>
+                            <div class="object_vote"></div>
+                            <div class="object_vote"></div>
+                            <div class="object_vote"></div>
+                            <div class="object_vote"></div>
+                            <div class="object_vote"></div>
+                            <div class="object_vote"></div>
+                            <div class="object_vote"></div>
+                            <div class="object_vote"></div>
+                        </div>
+                    </div>`
+var strloading= `<div id="loading-center">
+                                        <div id="loading-center-absolute">
+                                            <div class="object" id="object_one"></div>
+                                            <div class="object" id="object_two"></div>
+                                            <div class="object" id="object_three"></div>
+                                        </div>
+                                    </div>`;
+
+// 下拉框
+var selectHead = document.getElementsByClassName('select-head')[0];
+var selectHeadCont = document.getElementsByClassName('select-head-cont');
+var Option = document.getElementsByClassName('option')[0];
+var optionItem = document.getElementsByClassName('option-item');
+
+/*默认是第一个选项*/
+selectHeadCont[0].innerHTML = optionItem[0].innerHTML;
+
+/*点击后出现下拉框*/
+var bl = true;
+selectHead.addEventListener('click', function () {
+    if (bl) {
+        Option.style.display = 'block';
+        bl = false;
+    } else {
+        Option.style.display = 'none';
+        bl = true;
+    }
+}, false);
+/*点击选项后出现在下拉框*/
+var len = optionItem.length;
+for (var i = 0; i < len; i++) {
+    optionItem[i].index = i;
+    optionItem[i].addEventListener('click', function () {
+        selectHeadCont[0].innerHTML = optionItem[this.index].innerHTML;
+        Option.style.display = 'none';
+        bl = true;
+    }, false);
+}
+/*点击其他地方时，select会收起来*/
+document.body.addEventListener('click', function () {
+    Option.style.display = 'none';
+}.false);
+
+
+function fununlock() {
+    $j('#votelist,#voteitem,#promotion').hide();
+    $j('#unlock').show();
+}
+function funpromotion() {
+     $j('#promotion').show();
+     $j().ui({ cid: "topti", s: 4, z: -1, marg: 4,padd:2, w:133, h:35, ca: " 长按下图保存|`复制链接|copy()`关闭|closeimg();$j('#minepool').show()", class0: 'x_b___222 _f_20 _r_10__666_1 cent ' })
+     qrcode('', $j().getUrl('tid', sj.account.name||CONFIG.DEPLOYER));
+     capture('sharediv');
+}
+ 
+function checktype(v) {
+    $j('#voteradi').attr('v', v);
+}
+async function digmine() {
+   
+    // console.log("digmine", resp)
+    okbtn(0, 0, 0, (parseFloat($j('[en="voamount"]').vale()).toFixed(4) + ' EOS') || '10.0000 EOS', "digmine");
+
+}
+
+
+
+function votebackbtn() {
+    $j('#votedetail').hide();
+    menu2();
+}
+
+// 下拉框
+$j('select').mouseup(function () {
+    var flag = this.value;
+    $j("#tjimg").attr("src", flag);
+});
+
+async function init() {
+    // 动态构建ui
+    let ca = [];
+    let WW = $j().getcw(), WH = $j().getch(); // window width & height
+    let BMH = 70; // bottom menu height
+    $j('#iframediv').css('height', WH + 'px');
+    $j('#votelist').css('height', (WH - 150) + 'px');
+    $j('.pages-container').css('height', (WH - BMH) + 'px');
+	
+    $j('.loading').html(strloading);
+	$j('.value').html( `<div id="loading_value">
+                            <div id="loading-center_value">
+                                <div id="loading-center-absolute_value">
+                                    <div class="object_value" id="object_one_value"></div>
+                                    <div class="object_value" id="object_two_value"></div>
+                                    <div class="object_value" id="object_three_value"></div>
+                                </div>
+                            </div>
+                        </div>`);
+
+    $j().ui({ cid: "topmenu", z: -1, s: 10, marg: 0, w: 40, h: 23, ca: ' <div class="copy-button" style="background: url(css/copy_btn_common.png) no-repeat; height: 26px; background-size: 52%;">  </div>|funcopy({id:\'accountName\'})`<div class="qrcode-button" style="background: url(css/qrcode_btn_common.png) no-repeat; height: 42px; background-size: 70%;"> </div>|funpromotion()', class0: '' });
+
+    // 底部菜单按钮
+
+    $j().ui({ z: -1, s: 30, marg: 0, padd: 0, w: 60, h: 68, cid: 'menu', ca: '<svg t="1564123249353" class="icon" style="width: 3.89375em; height: 3em; vertical-align: middle; fill: currentColor; padding-top: 0px;" viewBox="0 0 1208 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1667"><path d="M 437.706 426.785 h -0.09405 a 37.9374 37.9374 0 1 0 0.09405 0 Z" p-id="1668" fill="#B29775"></path><path d="M 1087.11 557.373 h -62.1436 a 11.2507 11.2507 0 0 0 -0.1881 -2.12788 L 958.862 169.934 a 37.3849 37.3849 0 0 0 -26.1812 -29.3906 l -263.34 -77.0388 a 36.9969 36.9969 0 0 0 -39.7832 13.167 l -107.723 141.781 l -36.0212 -31.6714 a 37.044 37.044 0 0 0 -24.3708 -9.14633 h -131.67 a 37.2908 37.2908 0 0 0 -34.5987 23.9475 L 163.28 548.297 v 0.117563 a 41.3115 41.3115 0 0 0 -2.01032 8.95825 H 99.032 a 37.1615 37.1615 0 0 0 0 74.3112 H 148.996 l 77.5912 172.934 c 0.670106 14.2368 16.6939 25.2525 37.0322 25.2525 h 0.387956 a 99.6459 99.6459 0 0 0 -4.50264 28.9204 c 0 56.912 46.1785 103.208 102.95 103.208 s 102.961 -46.2961 102.961 -103.208 a 99.3994 99.3994 0 0 0 -4.5144 -28.9204 H 725.17 a 100.927 100.927 0 0 0 -4.43211 28.9204 c 0 56.912 46.1903 103.208 102.961 103.208 s 102.973 -46.2961 102.973 -103.208 a 99.7753 99.7753 0 0 0 -4.50264 -28.9204 h 0.387956 c 19.9856 0 36.3385 -11.2507 37.0322 -25.2525 l 77.5912 -172.934 H 1087.15 a 36.8089 36.8089 0 0 0 26.24 -10.8981 A 37.1968 37.1968 0 0 0 1087.15 557.373 Z M 852.608 858.78 a 28.8263 28.8263 0 1 1 -28.8381 -28.9204 a 28.9792 28.9792 0 0 1 28.8381 28.9204 Z m -461.21 0 a 28.8263 28.8263 0 1 1 -28.8381 -28.9204 a 28.9674 28.9674 0 0 1 28.8734 28.9204 Z M 239.12 557.373 l 116.022 -305.533 h 92.2518 l 55.3132 48.6473 a 38.1138 38.1138 0 0 0 28.0975 9.01705 a 36.7383 36.7383 0 0 0 25.7814 -14.5072 l 116.281 -153.102 l 216.844 63.3897 l 60.4742 352.088 Z m 716.943 74.2995 l -55.6306 123.899 H 285.957 l -55.5835 -123.899 Z" p-id="1669" fill="#B29775"></path><path d="M 739.83 342.258 a 36.4444 36.4444 0 0 0 -50.2932 0 l -63.0253 60.7915 a 33.7404 33.7404 0 0 0 0 48.8943 a 36.4444 36.4444 0 0 0 50.305 0 l 37.9021 -36.515 l 37.961 36.5855 a 36.4444 36.4444 0 0 0 50.258 0 a 33.7404 33.7404 0 0 0 0 -48.9412 Z" p-id="1670" fill="#B29775"></path><p class="shadow" style="color: #B29775; font-size: 15px; margin-top: -4px; text-align: center;">矿池</p></svg>|menu1()`<svg t="1564124152060" class="icon" style="width: 2.7em; height: 2.9em; vertical-align: middle; fill: currentColor; padding-left: 9px;" viewBox="0 0 1028 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5338"><path d="M765.256602 864.876154h-63.767883v63.645449H765.256602v-63.645449z m-127.535767 0h-63.767883v63.645449h63.767883v-63.645449z m-159.419709-445.558957a31.777832 31.777832 0 0 0 22.542202-9.325415l159.419709-159.123826a31.847212 31.847212 0 1 0-45.084404-44.994619l-159.419709 159.123826a31.832928 31.832928 0 0 0 22.542202 54.320034z m541.81071 253.541105a31.553369 31.553369 0 0 0-2.181371-10.835438c-0.295883-0.693795-0.761133-1.285561-1.095788-1.95895a30.902427 30.902427 0 0 0-2.88945-5.223865l-191.303651-254.602203a31.281973 31.281973 0 0 0-3.968913-3.305727l96.816992-98.069903a31.832928 31.832928 0 0 0 0-44.729345L679.070992 14.712526a32.853214 32.853214 0 0 0-45.398652 0L265.612278 387.504675h-42.382686a31.873739 31.873739 0 0 0-25.507154 12.733171L6.418787 654.840049a31.530923 31.530923 0 0 0-2.88945 5.223865c-0.334654 0.673389-0.799904 1.265155-1.097828 1.95895a31.600302 31.600302 0 0 0-2.181372 10.835438c-0.016325 0.367303-0.216301 0.693795-0.2163 1.061098v127.290898a31.845171 31.845171 0 0 0 31.883941 31.832928H127.577766v159.123826a31.845171 31.845171 0 0 0 31.883942 31.832928h701.44672a31.845171 31.845171 0 0 0 31.883942-31.832928v-159.123826h95.651825A31.845171 31.845171 0 0 0 1020.328137 801.210298v-127.290898c0-0.367303-0.204057-0.673389-0.216301-1.061098zM656.373706 82.398309l191.644427 194.099234-235.204523 238.298031h-178.788821l-102.253077-103.62026zM239.172583 451.150125h42.501039l62.849626 63.645449H255.113533a31.832928 31.832928 0 1 0 0 63.645449h510.143069a31.832928 31.832928 0 1 0 0-63.645449h-62.951654l62.859829-63.665855c0.028568 0 0.059177 0.020406 0.091825 0.020406h15.940951l143.478759 190.956753H95.693824zM829.024486 960.334125H191.34565v-127.290899h637.678836v127.290899z m127.535767-190.936348H63.809883v-63.64545h892.75037v63.64545z" p-id="5339" fill="#B29775"></path><p class="shadow" style="color: #B29775; font-size: 15px; margin-top: -1px; text-align: center;">投票</p></svg>|menu2()`<svg t="1564637556372" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2389" xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 2.7em; height: 2.9em; vertical-align: middle; fill: currentColor; padding-left: 9px;"><defs><style type="text/css"></style></defs><path d="M992.855192 167.488792c-17.197403 0-31.134814 13.678571-31.134815 30.548175v54.272557C870.965302 101.332558 703.59044 0 511.9995 0 262.962959 0 54.859195 171.190511 2.80827 400.114445 1.044356 403.948083 0 408.17148 0 412.653718c0 16.869605 13.944407 30.546177 31.142809 30.546177 17.197403 0 31.136813-13.676572 31.136814-30.546177h0.004997c46.161555-201.966546 229.910327-352.923525 449.71488-352.923524 219.801556 0 403.550328 150.956979 449.719878 352.923524 0 16.869605 13.937412 30.546177 31.14181 30.546177 17.197403 0 31.134814-13.676572 31.134814-30.546177V198.041964c0.000999-16.875601-13.941409-30.553173-31.14081-30.553172z m0 413.29932c-17.197403 0-31.134814 13.677572-31.134815 30.551174-46.16955 201.966546-229.919321 352.923525-449.719877 352.923525-219.804554 0-403.558323-150.956979-449.720877-352.923525 0-16.874602-13.94041-30.551174-31.14181-30.551174C13.944407 580.788112 0 594.464684 0 611.339286v214.61775c0 16.870604 13.93941 30.546177 31.137813 30.546177 17.2014 0 31.14181-13.676572 31.14181-30.546177v-54.267559c90.753077 150.97097 258.122942 252.303528 449.720877 252.303527 249.034542 0 457.139306-171.190511 509.184235-400.109448 1.771908-3.837635 2.80827-8.061033 2.808269-12.54427 0.003998-16.874602-13.938411-30.551174-31.137812-30.551174z m0 0" fill="#B29775" p-id="2390"></path><path d="M659.43365 644.27599c-0.020987 0-0.038976 0.007995-0.056965 0.007995v-0.344787H544.97518v-69.53815h114.402504v-0.370772c0.017989 0 0.034978 0.004997 0.056965 0.004997 13.703556 0 24.814709-11.108155 24.814709-24.809712 0-13.705554-11.111153-24.81371-24.814709-24.813709l-0.056965 0.001998v-0.001998h-97.419968l106.857153-196.728774-0.038976-0.018988c3.900596-5.30673 6.274134-11.796731 6.274134-18.89036 0-17.6881-14.339164-32.028264-32.029263-32.028264-13.837473 0-25.513278 8.823563-29.991519 21.108993h-0.234856s-92.389069 180.430817-96.660436 192.608312h-1.278213c-5.983313-15.168653-100.941799-192.608313-100.941798-192.608312h-0.241851c-4.345322-12.271438-15.932182-21.108992-29.693703-21.108993-17.459241 0-31.613519 14.155277-31.613519 31.614519a31.481601 31.481601 0 0 0 5.389679 17.664115l-0.156904 0.083949 106.304494 198.303803h-99.334788c-13.705554 0-24.814709 11.108155-24.814709 24.813709 0 13.706554 11.109154 24.814709 24.814709 24.814709v0.360778h117.920336v69.53815H364.56635v0.341789c-13.705554 0-24.814709 11.108155-24.814709 24.809712 0 13.705554 11.109154 24.81371 24.814709 24.81371v0.347785h117.920336v99.979392h0.679582a31.436628 31.436628 0 0 0-0.655596 6.348088c0 17.212394 13.954401 31.162797 31.163796 31.162797 17.211394 0 31.162797-13.950404 31.162797-31.162797 0-2.177658-0.228859-4.299351-0.654596-6.348088h0.793511V694.247197h114.402504v-0.349784c0.017989 0 0.034978 0.006996 0.056965 0.006996 13.703556 0 24.814709-11.108155 24.814708-24.81371-0.001999-13.701557-11.113152-24.814709-24.816707-24.814709z m0 0" fill="#B29775" p-id="2391"></path><p class="shadow" style="color: #B29775; font-size: 15px; margin-top: -1px; text-align: center;">交易</p></svg>|trans()`<svg t="1564124790523" class="icon" style="width: 3.8em; height: 2.9em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="16583"><path d="M936.837848 330.425571c-23.303752-55.096852-56.659441-104.572684-99.139951-147.053194-42.479487-42.479487-91.955318-75.835176-147.053194-99.138928-57.059554-24.133653-117.65463-36.371372-180.098821-36.371372-62.445214 0-123.039267 12.236696-180.098821 36.371372-55.097876 23.303752-104.572684 56.659441-147.053194 99.139951-42.48051 42.479487-75.835176 91.955318-99.139951 147.053194-24.133653 57.060577-36.371372 117.65463-36.371372 180.099844 0 62.444191 12.236696 123.039267 36.371372 180.098821 23.303752 55.097876 56.659441 104.572684 99.139951 147.053194 42.479487 42.48051 91.955318 75.835176 147.053194 99.138928 57.059554 24.134677 117.653607 36.371372 180.098821 36.371372 62.444191 0 123.039267-12.236696 180.098821-36.370349 55.097876-23.303752 104.573707-56.659441 147.053194-99.139951 42.48051-42.48051 75.835176-91.955318 99.139951-147.053194 24.134677-57.059554 36.371372-117.65463 36.371372-180.098821C973.20922 448.080202 960.972525 387.486148 936.837848 330.425571zM510.545882 909.37231c-219.924875 0-398.846894-178.923042-398.846894-398.847917 0-219.925898 178.922019-398.847917 398.846894-398.847917 82.21856 0 158.703535 25.009603 222.254943 67.815525l-69.449745 88.704275c-45.661969-29.193903-98.755188-44.842301-154.258293-44.842301-76.706009 0-148.821467 29.870308-203.060789 84.10963s-84.10963 126.354779-84.10963 203.060789 29.870308 148.820444 84.10963 203.059765c47.77612 47.77612 109.424178 76.633355 175.860287 82.83459 14.681374 34.014698 48.51904 57.824987 87.921445 57.824987 52.867068 0 95.723132-42.857087 95.723132-95.723132 0-2.331092-0.088004-4.640694-0.251733-6.92983 16.717753-10.879792 32.43062-23.570835 46.866401-38.006616 54.239322-54.239322 84.110653-126.353756 84.110653-203.059765 0-76.307943-29.572526-148.06422-83.277682-202.206328l69.741387-89.076758c77.901231 72.838935 126.665865 176.472224 126.665865 291.283086C909.394822 730.450291 730.47178 909.37231 510.545882 909.37231zM569.814754 662.797471c-43.551912 0-80.306001 29.087479-91.9062 68.89409-108.446921-15.21861-192.169741-108.59223-192.169741-221.167169 0-123.157971 100.197026-223.354997 223.354997-223.354997 41.859363 0 81.060177 11.584849 114.582665 31.702026l-101.19782 129.253806c-4.317329-0.921999-8.792247-1.417279-13.384845-1.417279-35.244712 0-63.815421 28.570709-63.815421 63.815421s28.571732 63.815421 63.815421 63.815421 63.815421-28.571732 63.815421-63.815421c0-6.777357-1.065262-13.302981-3.022847-19.431561l103.294574-131.931798c36.767392 39.828101 59.268872 93.013417 59.268872 151.36336 0 74.806753-36.97103 141.136437-93.596701 181.692109C621.433388 674.085562 596.942601 662.797471 569.814754 662.797471z" p-id="16584" fill="#B29775"></path><p class="shadow" style="color: #B29775; font-size: 15px; margin-top: -1px; text-align: center;">发现</p></svg>|menu3()`<svg t="1564124421261" class="icon" style="width: 4em; height: 2.9em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="12002"><path d="M651.35 570.164c70.724-45.652 117.549-125.149 117.549-215.588 0-141.619-114.806-256.424-256.425-256.424-141.619 0-256.424 114.805-256.424 256.424 0 90.688 47.079 170.379 118.129 215.971-150.69 53.654-261.205 191.995-274.264 357.747h64.183c15.778-177.399 157.756-312.373 338.533-317.5 3.268 0.123 6.545 0.206 9.843 0.206 3.564 0 7.106-0.093 10.635-0.236 181.192 4.717 323.6 139.845 339.402 317.53h64.184c-13.091-166.148-124.104-304.752-275.345-358.13zM320.063 354.576c0-106.266 86.146-192.412 192.411-192.412s192.412 86.146 192.412 192.412c0 102.905-80.785 186.941-182.395 192.153a425.194 425.194 0 0 0-9.187-0.104c-3.455 0-6.899 0.043-10.334 0.127-101.85-4.954-182.907-89.097-182.907-192.176z" p-id="12003" fill="#B29775"></path><p class="shadow" style="color: #B29775; font-size: 15px; margin-top: -1px; text-align: center;">我的</p></svg>|menu4()', class0: 'x_botbtn', ncheck: 1 })
+
+    $j('#menu_0').checkd();
+
+    
+
+    ca = [];
+    for (let i in data.fname) {
+        ca.push('<div style="width: 100%; height: 60px"><img src="http://wx.leemai.cn/a/css/' + data.fname[i].name + '" style="width:55px;height:55px;border-radius:10px;float:left;margin:2px;"><span id="voteBox_name" style="width: 109px; height: 45px; color: #C3A47D; text-align: left; float: left; line-height: 45px; font-size: 19px;margin-left:25px;">' + data.fname[i].ticket + '</span></div>');
+    }
+    // <span id="findbox_name" style="width: 154px; height: 45px; color: #000000;    font-size:13px;">' + data.fname[i].people + '</span></div>
+    // 游戏容器
+    $j().ui({cid:'btnmining',s: 0,marg:5, z: 2,x:65,y:80, w: 120, h: 31,ca:'采 矿|mining()',class0:'x_b_b1682a_7b4b23_fff _r_20__d69a5b_1 shadow cent _f_20'});
+    $j().ui({cid:'btnrank',s: 0,marg:5, z: -2, w: 120, h: 28,ca:"排行榜|$j('#divrank').show();getrank('lockedmine', null, 1 );",class0:'x_b___fff _r_20__eee_1 cent'});
+    
+   
+  
+    // 游戏顶部栏
+	$j().ui({cid:'gamearea',s: 1, z: 0, marg: 10, w: -96.5, h: 60,ca,class0:'_r_0_b_555_1 shadow'});
+	$j().ui({cid:'communityarea',s: 1, z: 0, marg: 10, w: -96.5, h: 60,ca,class0:'_r_0_b_555_1 shadow'});
+	$j().ui({cid:'mediaarea',s: 1, z: 0, marg: 10, w: -96.5, h: 60,ca,class0:'_r_0_b_555_1 shadow'});
+    $j().ui({ cid: "findtitle", s: 0, z: -1,padd:6, marg: 0, w: 140, h: 31, ca: '<img src="http://wx.leemai.cn/a/css/gamet.png">|game()`<img src="http://wx.leemai.cn/a/css/audit.png" >|media()`<img src="http://wx.leemai.cn/a/css/messt.png" >|comm()', class0: 'x_botbtn cent _r_9', ncheck: 1 })
+    // 大图滚动
+    $j().ui({ cid: "banp", s: 0, z: -1, marg: 0, w: -100, h: -100, ca: ['<img src="http://wx.leemai.cn/a/css/bann01.png"><img src="http://wx.leemai.cn/a/css/bann01.png"><img src="http://wx.leemai.cn/a/css/bann01.png">'], class0: '', ncheck: 1 })
+
+
+    // 解锁
+    $j().ui({ cid: "unlockCoeff", s: 10, z: 0, marg: 0, w: -82, h: 33, ca: ['<p style="background:#3C3C3C;color:#C1A27D;font-size:17px">用户参与投票且支付至少10 ' + CONFIG.SYMBOL + ',则完成转换<br>温馨提示:前往投票完成将原矿转为"' + CONFIG.SYMBOL + '"</p><input style="width: 370px; height: 35px; background: none; border: 1.5px solid #86745D; color: #C1A27D; font-size: 22px; text-indent: 14px;border-radius:7px"  id="unlockb" value="转换系数：0.01" onfocus="this.blur()">'], class0: 'x_b_3C3C3C_3C3C3C _f_22 cent', ncheck: 1 })
+    // 推广
+    
+    //$j().ui({cid:"fribox",s:10,z:0,marg:0, w:-90, h:150, ca:[''],class0:'x_hji _f_22 cent' ,ncheck:1})
+
+    $j().ui({ cid: "BalanceBox", s: 10, z: 0, marg: 0, w: -100, h: 53, ca: ['<div id="avatar" style="width: 45px;height: 45px;background: #535353; border-radius: 45px; float: left; margin: 4px;"></div><p id="eostitle" style="width: 120px;height: 25px;float: left; margin: 4px;line-height:25px;color:#C7A780">EOS 101.9</p><p id="timetitle" style="width: 145px; height: 25px; float: left; margin-left: -117px; line-height: 25px; color: #B1B1B1; margin-top: 27px;font-size:14px">14/05/2019   14:35:12</p><p id="num" style="width: 133px; height: 25px; float: left; line-height: 25px; color: #07F1C2; margin: 4px; margin-left: 45px;">+200 AIGAC</p><p id="operating" style="width: 100px; height: 25px; float: left; margin-left: -100px; line-height: 25px; color: #B1B1B1; margin-top: 27px;font-size:16px">转入</p>'], class0: 'x_b_404040_404040 _f_22 _r_8 cent _s_000__0px_5px_10px' })
+
+    
+
+
+    $j().ui({ z: -1, s: 50, marg: 8, w: 110, h: 37, cid: 'Balancbtn', ca: '收款|sk()`转账|zz()', class0: 'x_b_C7A780_C7A780_000 _f_20 _r_8 cent' })
+    $j('#votemenu_0').checkd();
+    $j('#findtitle_0').checkd();	
+    menu1();   
+}
+init();
+function getrank(type, to, sortkey,divid, func) {
+	 $j('#'+divid||"rankdiv").html(strloading);
+    getRankList(CONFIG.DEPLOYER, 'aigt33334444').then(resp => {
+        let caa = [];
+		let totallock=0;
+		let unlockers=0;
+        let totalmining=0;
+        let toa = [];
+        for (let item of resp) {
+            let ma = item.memo.split('|');
+            if (ma[0] == type && item.to == (to || item.to) && (!toa.includes(item.to)||to)) {
+                toa.push(item.to);
+                caa.push({ to: item.to,quantity:item.quantity.split('.')[0], ma1: parseInt(ma[1]),ma5: parseInt(ma[5]),ma3: parseInt(ma[3]),ma4: parseInt(ma[4]) });
+				totallock+=parseInt(ma[1]);
+				if(sj.todayd==parseInt(ma[5])) {
+					unlockers+=1;
+					if(!toa.includes(item.to))totalmining+=parseInt(ma[3]);
+					
+				}
+            }
+        }
+        let newa = $j(caa).jsort('ma' + sortkey, 1);
+    	let ca = [];
+            for (let i = 0; i < newa.length; i++) {
+                if(to){
+					if(newa[i].ma5.length==5)newa[i].ma5=newa[i].ma5*24*3600;
+                     ca.push(' <div class="leaderText" style="height:35px;padding-top:6px"><span style=" width:110px;float:left">' +($j().getdatetime(newa[i].ma5*1000)).substring(5)+ '</span>   <span style="width:220px;float:left">' +   ((newa[i].ma3>500?newa[i].ma3*0.0001:newa[i].ma3).toFixed(1)+' EOS='+(newa[i].quantity*0.01).toFixed(2)+' AIGT+'+(newa[i].quantity*0.99).toFixed(0)+'原矿')    + '</span> </div>');
+                
+
+                }else{
+                     ca.push(' <div class="leaderText" style="height:35px;padding-top:6px"><span class="ranknum">'+(i+1)+'</span><span style="margin-left:30px;width:32px;float:left">' + ( data.level[(newa[i].ma1 + '').length - 4]) + '</span> <span style="margin-left:30px;width:220px;float:left">' + (newa[i].to) + '</span> <span  >' + newa[i].ma1 + '</span> </div>');
+                
+                }
+               
+            }
+		setTimeout(function(){	
+         $j().ui({ cid: divid||"rankdiv", s: 2, w: -99, h: 42, ca, class0: "" });
+		 
+         if(func)func(newa);
+		},1000)
+		 //======================
+		  let supp=1000000000-parseInt(sj.st.supply);
+		  let minn=5000000000-parseInt(sj.st.mine);
+		  let shtml='<div> 总用户数: '+sj.st.total+' 今日解锁或兑奖人数:'+unlockers+' 今日总采矿：'+totalmining+'</div>';
+		  
+		  shtml+='<div> 矿池流通: '+(minn-totallock)+', 生态流通: '+ supp+', 总锁仓:'+totallock+'</div>';
+		  $j('#moreinfo').html(shtml)
+
+    });
+}
+
+async function mining() {
+    $j('#miningbox').show();
+
+    let ca = [];
+	sj.info=sj.info||{};
+    ca.push('<div  >推荐人</div>'+grid.inp("tx", "refer", "", 0, { refer: $j().getv('tid', sj.info.referrer||"") }, sj.info.referrer ? "disabled ui3inputclas" : "ui3inputclas"));
+    ca.push('<div  >采矿额(EOS)</div>'+grid.inp("tx", "voamount", "", 0, { voamount: '10' }, "ui3inputclas"));
+    $j().ui({ cid: "refeBox", s: 50, z: 0, marg: 0, w: -98, h: 36, ca, class0: '' });
+    $j('[en="voamount"]').keyup(function () {
+        let todaysum = (sj.info.todaysum || 0)
+        if (sj.todayd != (sj.info.paydate||0)) todaysum = 0;
+        let num = $j('[en="voamount"]').vale() * (10000 - parseInt(parseInt(sj.st.eosprize) * 0.1) );
+		 $j('#miningremark').html( '(今天已采矿：' + todaysum + 'EOS)<br>=' + (num * 0.01).toFixed(2) + 'AIGT + ' + (num * 0.99).toFixed(0) + '原矿<br> ');
+        $j('#miningitem').html(sj.formulastr);
+
+    });
+    $j('[en="voamount"]').keyup();
+
+    getrank('lockedmine', sj.account.name || CONFIG.DEPLOYER, 1,  "mydigminediv")
+}
+
+      
+ 
+
+$j('.back').mouseup(function () {
+    $j('.scrollView,.token-container,.account-address,.leader-board').show();
+    $j('#ait,.back').hide();
+})
+ 
+$j('#dzbback').mouseup(function () {
+    $j('#dzb').hide();
+})
+ 
+$j('#tjdzbback').mouseup(function () {
+    $j('#tjdzb').hide();
+})
+function closeimg() {
+    $j('[crossorigin="anonymous"]').remove();
+	
+    $j('#iframediv,#minepool,#promotion,#votepage,#votedetail,#miningbox,#mine,#dzb,#find,#inputtable').hide();
+ }
+function menu3() {
+    closeimg();
+    $j('#find').show();
+    $j('#findbox_0_0').css("overflow-y", "auto");
+    $j('#findbox_0_0::-webkit-scrollbar').css("width", "0 !important");
+    
+}
+function menu4() {
+    closeimg();
+    $j('#mine').show();  
+ 	AIGTsetAccount();   
+}
+
+
+async function menu1() {
+   closeimg();
+    $j('#minepool').show();
+   	$j('.accountName').html('在取链上数据');
+    getPoolInfo().then(poolData => {
+		
+		for (let argn in poolData) { // 将数据更新到对应的div
+            let jPool = $j(`[argn=${argn}]`);
+			let vv=poolData[argn]+''
+			if(argn.indexOf('eos')!=0)vv=(vv).split('.')[0]+' '+vv.split(' ')[1];
+            jPool.text(vv);
+        }
+ 
+        function magic_number(value,num) {
+            $j('[argn="eosprize"]').animate({ count: value }, {
+                duration: 2000, //持续时间  
+                step: function () {
+                    // console.log(this.count);
+                    $j('[argn="eosprize"]').html(parseFloat(this.count).toFixed(4)+' EOS');
+               }
+            });
+			setTimeout(function(){
+			 	$j('[argn="eosprize"]').html(value.toFixed(4)+' EOS');
+			},2010);
+         };
+        magic_number(parseFloat(sj.st.eosprize), $j('[argn="eosprize"]').text());
+		
+    	AIGTsetAccount();
+	})
+    
+}
+async function menu2(typ) {   
+    closeimg(); 
+	 $j('#votepage').show();
+	     $j('.loading2').html(strloading2);
+
+	 $j().ui({ cid: "votemenu", z: -1, s: 1, marg: 8, w:90, h: 23, ca: "全部|menu2()`EOS奖金|menu2('EOS')`AIGT奖金|menu2('AIGT')"+ (sj.account.name == CONFIG.DEPLOYER ? '`发起|funinput(0,' + CONFIG.PID + ',0,1,\'add\')' : ''), class0: 'x_hjh _f_18 cent' });
+    let data = await getCompetitions(typ);
+    let caa = [];
+    data.forEach(competition => {
+
+        // 参赛者列表
+        let ca = [];
+        let indx = 0;
+        for (let i in competition.competitors) {
+            var item = competition.competitors[i];
+            if (item.from != CONFIG.DEPLOYER) {
+                indx++; //${item.endtime < Math.floor(db.gett() / 1000) && item.from==sj.account.name ? 'white' : 'gray'}
+				
+				var cas= $j().getdatetime((item.endtime + i * 60) * 1000).substring(5) +" 领奖|okbtn("+CONFIG.PID+","+competition.id+","+item.id+",'0.1000 AIGT','prize','')"  ;
+				if (item.times == 1) cas = "已领奖";
+                var strbtn = $j().ui({ w: 140, h: 24, z: 2, x: 137, marg: 0, ca:cas, class0: (item.endtime < Math.floor(db.gett() / 1000) && item.from==sj.account.name ? 'x_b_7acdc8_419994_111':'x_b_bbb_aaa_333')+' cent _f_16 _r_10__aaa_1 noshadow' });	
+				 
+              
+				let ddvote= $j().ui({ w: 79, h: 35, z: 2, x: -2, y: -1, marg: 8, ca: '投票|votebtn(' + item.pid + ',' + item.id + ')', class0: 'x_b_C7A780_C7A780_000 cent _f_22 _r_10' });	
+                ca.push('<span class=ranknum>' + parseInt(indx) + '</span><span style="width:390px; height: 37px; color: #cdad86; cursor:point; position: absolute; top: 6px; font-size:20px; left:52px; overflow: hidden; text-overflow: ellipsis;cursor: pointer;" onclick=_local(' + item.pid + ',' + item.id + ') >' + item.content.split('@@')[0] + ' </span>'
+				+'<span style="width: 105px; height: 30px; color: #bbb; font-size: 15px; position: absolute; left: 52px; top: 38px;">票数：' + item.vote + '</span>'
+				+'<span style="width: 120px; height: 30px; color: #bbb; position: absolute; font-size: 15px; left: 200px; top:38px ">' + item.from + '</span>' 
+				
+				+ddvote 
+				+ '<div style="width: 230px;   color: #bbb; position: absolute; left: 52px; font-size: 15px; top: 67px;">' + (parseInt(item.reward)>0 ?  (strbtn+'可领：'+parseInt(item.reward) + ' <img src=css/' + (competition.times == 12 ? 'eos_icon' : 'a') + '.png  style="width:20px;margin-bottom:-4px;" >')  : "")+ ' </div> ');
+            }
+        }
+        let itemhtml = $j().ui({ s: 0, w: -100, h:100, ca, class0: 'x_b_3C3C3C_3C3C3C _r_1_b_5f5f5f_1', class2: '' });
+		let jl=competition.allotment > 10000 ? (competition.allotment *0.0001 + " " +  (competition.times == 11?'原矿':CONFIG.SYMBOL)) : competition.allotment * (competition.times>10?0.01:1) + '%×';
+		jl+=competition.times == 11 ? ' [原矿奖金池]' : (competition.times == 12 ? " [EOS奖金池]" : " 赞助奖金总额：" + competition.prize.replace('.0000 ', ''));
+        caa.push($j().ui({ w: 79, h: 35, z: -2, marg: 5, ca: '参赛|funinput(' + CONFIG.PID + ',' + competition.id + ',0,' + competition.minamount + ',\'vote\',\'报名费\')'+(sj.account.name == CONFIG.DEPLOYER ? ('`修改|funinput(0,' + CONFIG.PID + ',' + competition.id + ',' + competition.minamount + ',\'add\')') : ''), class0: 'x_b_7ACDC8_7ACDC8_000 cent _f_22 _r_10' }) + '<div id="votetitle' + competition.id + '" onclick=_local(' + CONFIG.PID + ',' + competition.id + ') style="height:35px;font-size:22px;text-indent:20px;cursor: pointer;color:#C3A47E">' + competition.content.split('@@')[0] + '  </div><div style="font-size: 15px;height:55px;padding-left: 20px;color:#B1B1B1;border-bottom:1px solid #5f5f5f">截止：' + ($j().getdatetime((competition.endtime) * 1000)).substring(5) + ' &nbsp; &nbsp; 报名费：' + competition.minamount + ' <img style="position:relative;top:3px;width:20px;" src="css/a.png">   <br>奖金：前' + competition.winners + '名，每人可得：' + jl + ' &nbsp; &nbsp;  </div><div style="width: 100%; height: 400px; overflow-y: auto;overflow-x:hidden">' + itemhtml + '</div>')
+		
+		
+
+
+    });
+
+    $j().ui({ cid: "votelist", s: 10, z: 0, marg: 0, w: -98, h: 500, ca: caa, class0: 'x_vote _r_5__795a34_1 x_b_222_222_fff _f_22 shadow' });
+
+}
+async function votebtn(ppid, pid) {
+    $j('#votedetail').show(); $j('#votepage').hide();
+    var item = sj.records[ppid + '_' + pid];
+
+    if (item.from == sj.account.name) {
+        $j().ui({ z: -2, marg: 8, w: 90, h: 37, cid: 'votemenus', ca: [`编辑|funinput(${CONFIG.PID},${ppid},${pid},'0.1000 AIGT','vote','报名费')`], class0: 'x_b_C7A780_C7A780_000 _f_20 _r_8 shadow cent' })
+    } else {
+        $j('#votemenus').html("");
+    }
+    let allots = (item.allotment);
+    if (allots < 100) {
+        allots = "剩余总额×" + allots + "%";
+    } else {
+        allots = allots * 0.0001 + CONFIG.SYMBOL;
+    }
+    $j('#votefrom').html('投票给' + item.from);
+
+    $j().ui({ cid: "voteradi", s: 5, z: 0, marg: 0, w: -89, h: 30, padd: 12, ca: "投票并提炼，可转换原矿总量的1% =" + (sj.account.name ? ((sj.info.locked * 0.01).toFixed(2) + " " + CONFIG.SYMBOL) : '未连接钱包') + "|checktype('unlock')`投票并兑奖 <span id=exeos>兑率=(EOS基金池+原矿数/10000)/1000</span>  |checktype('exchange')`仅投票，" + item.from + "将获得<span id=nnaigt>AIGT</span>|checktype('vote')", class0: 'x_b_383838_383838_C7A780 _f_17', class1: 'x_radio leftm', ncheck: 1 })
+    $j('#voteradi_2').checkd();
+    $j('#voteradi_1_0').css("white-space", "normal");
+    $j('#voteradi_0_0').css("white-space", "normal");
+    $j('#voteradi_2_0').css("white-space", "normal");
+    $j('#vote').keyup(function () {
+        $j('#memodiv').html('您将向' + CONFIG.DEPLOYER + '转账手续费 0.1 '+CONFIG.SYMBOL+',且备注memo 会包含了投票数' + $j('#vote').vale());
+        $j('#exeos').html(($j('#vote').vale() * (parseInt(sj.st.eosfund) + sj.info.locked / 10000) / 10000000).toFixed(4)+' EOS');
+		 $j('#nnaigt').html($j('#vote').vale() +' AIGT');
+
+    })
+    $j().ui({ cid: 'voteSubmit', s: 0, h: 40, w: 110, z: -2, ca: `确定投票|okbtn(${ppid},${pid},0,'0.1000 AIGT','','vote')`, class0: 'x_b_b3966f_b3966f_000 _f_22 shadow cent _r_9_b_aaa_1' });
+
+    let data = await getVoters(ppid, pid);
+    let ca = [];
+    let votesum = 0;
+    data.forEach((sitem, i) => {
+        // 投票者列表
+        ca.push('<span style="width: 36px; height: 40px; float: left; line-height: 40px; text-align: center; color: #CDAD86; font-size: 18px;">' + (parseInt(i) + 1) + '</span><span style="width: 90px; height: 30px; color: #CDAD86; font-size: 20px; position: absolute; left: 90px; top: 8px;">' + sitem.vote + '票</span> <span style="width: 79px; height: 30px; color: #B1B1B1; position: absolute; top: 10px; font-size: 19px; right: 120px;">' + sitem.from + '</span>');
+        votesum += sitem.vote;
+
+    });
+    if (!item.bmf) item.bmf = (item.vote - votesum);
+
+    $j('#voteinfo').html("总票数：" + (item.bmf ? (item.bmf + votesum) : item.vote) + "   (包括报名费：" + item.bmf + " <img src='css/a.png' style='width:20px;margin-bottom:-4px;'>,1 <img src='css/a.png' style='width:20px;margin-bottom:-4px;'>=1票)<br> 红包总额" + item.prize.replace('.0000','') + "，点编辑可以增加。<br>" + $j().getdatetime(item.endtime * 1000).substring(5) + "起" + '，前' + (item.winners) + '名可得红包：' + allots + "，先到先得 ")
+    $j().ui({ cid: 'votes', s: 0, w: -100, h: 40, ca, class0: 'x_b_3C3C3C_3C3C3C _r_10p10p0p0p_b_aaa_1', class2: '' });
+
+}
+
+// 填表
+async function funinput(ppid, pid, sid, v, type, subtype) { //发起主题
+
+    let ca = [];
+    let str = "请仔细填写表单：";
+    let pitem = sj.records[ppid + '_' + pid];
+    if (!sid && pitem.competitors) {
+        let competitor = pitem.competitors.find(v => v.from == sj.account.name);
+        if (competitor) sid = competitor.id;
+        if (sid) str = "您已成功参赛, 现在可以修改部分内容：";
+    }
+    let item = sj.records[pid + '_' + sid] || { content: "" };
+    if (type == 'vote' || sj.account.name == CONFIG.DEPLOYER) ca.push(grid.inp("tx", "vote", (type == 'add' ? '奖金类型(1:从赞助中出奖金，11:AIGT奖池,  12:EOS奖池)' : (sid ? "增加" : "") + (subtype) + "(" + CONFIG.SYMBOL + ")"), 0, { vote: type == 'add' ? (item.times||1) : pitem.minamount }, ""));
+    if (type == 'vote' || type == 'add') ca.push(grid.inp("tx", "memo", "参赛信息 [可修改]", 0, { memo: item.content.split('@@')[0] || (type == 'add' ? '月最佳社群评选' : '请支持我') }, ""));
+    if (type == 'vote' || type == 'add') ca.push(grid.inp("tx", "url", "详细信息的url [可修改]", 0, { url: item.content.split('@@')[1] || '' }, ""));
+
+    if (type == 'vote' || type == 'add') ca.push(grid.inp("tx", "quantity", (sid ? "增加" : "") + (type == 'add' ? "赞助金额(AIGT)" : "红包金额(AIGT) 发给投票者") + "", 0, { quantity: type == 'add' ? '80000' : '100' }, ""));
+    ca.push(grid.inp("tx", "allotment", "单个金额(" + CONFIG.SYMBOL + ") [小于1表示：按余额百分比分配，不可修改]", 0, { allotment: (item.allotment*0.0001)||10 }, (sid ? "disabled" : "")));
+    ca.push(grid.inp("tx", "winners", "限制领奖人数 [不可修改,必须<256]", 0, { winners: item.winners||200 }, (sid ? "disabled" : "")));
+    if (type == 'add') ca.push(grid.inp("tx", "endtime", "结束时间", 0, { endtime: $j().getdatetime(item.endtime*1000|| new Date(db.getd()).getTime() + 7 * 24 * 3600000 + 4 * 3600000) }, ""));
+    if (type == 'add') ca.push(grid.inp("tx", "minamount", "报名费(" + CONFIG.SYMBOL + ")", 0, { minamount: item.minamount||'100' }, ""));
+    let va = '';
+    if (type == 'digmine') {
+        va = '10.0000 EOS';
+    }
+    str += $j().ui({ cid: 'inputtable', padd: 20, s: 0, w: -90, h: 52, ca, class0: '' });
+    $j().jaler(str, 50, `确定|okbtn(${ppid},${pid},${sid},'${va}','${type}')`, 1);
+
+}
+
+//参赛弹窗确定
+async function okbtn(ppid, pid, sid, v, type, subtype) {
+    v = (v || $j('[en="quantity"]').vale() || '1.0000') + '';
+    if (v.indexOf(' ') == -1) v = parseFloat(v).toFixed(4) + ' ' + CONFIG.SYMBOL;
+
+    var otype = type;
+    type = type || $j('#voteradi').attr('v') || "vote";
+
+    let vo = subtype ? $j('#vote').val() : $j('[en="vote"]').val();
+    let memo = `|${($j('[en="allotment"]').val() || 1) * (vo>10 ? 10000 : 100)}|${$j('[en="winners"]').val() || 1}|${new Date($j('[en="endtime"]').vale()).getTime() / 1000 || 0}|${$j('[en="minamount"]').vale() || 1}|${vo || 10}|${($j('[en="memo"]').val() || '') + "@@" + ($j('[en="url"]').val() || '')}`;
+    if (type == 'digmine'){
+		let refer=$j('[en="refer"]').val();
+		if(refer.length>0){
+			memo = refer+'|';
+		}else{
+			  $j().jaler("<br><br>请输入您的邀请人，如果没有，可以到【发现】去寻找一个。");
+			return;
+		}
+	}
+
+    if (!sj.connected) {
+        let jtb = type + "|" + memo;
+        if (type != 'digmine') jtb = type + "|" + ppid + ":" + pid + ":" + (sid || 0) + "|" + memo;
+
+        $j().jaler("<br><br>由于未连接你的钱包，请在钱包中向 " + CONFIG.DEPLOYER + " 转账" + v + "，<br>并粘帖以下备注/memo(已复制在剪切板)<br><br>" + jtb + "<br><br>", 160);
+
+        // 复制
+        // 由于该库必须由点击某个dom触发，这里创建一个临时的dom
+        let dom = document.createElement('div');
+        dom.setAttribute('data-clipboard-text', jtb);
+        let clipboard = new ClipboardJS(dom);
+        clipboard.on('success', function (e) {
+
+        });
+
+        $j(dom).click();
+        setTimeout(function () { // 销毁
+            clipboard.destroy();
+        }, 100);
+
+
+        return;
+    }
+
+    if (v.indexOf(CONFIG.SYMBOL) > -1) {
+        if (!parseInt(sj.info.balance) ) { $j().jaler('余额不足，您需要先采矿！'); return }
+    }
+    try {
+        let resp = await transfer(v || '10.0000 EOS', type, memo, ppid, pid, sid);
+		if (type == "digmine") {
+			$j().jaler('采矿成功！'); 
+            menu4();
+        } else if (type == "add") {
+            $j('#guideggk').hide();
+            $j('#divzhezao').hide();
+            menu2();
+        } else if (otype == "" && subtype) {
+            votebtn(ppid, pid);
+        } else {
+            menu2();
+            $j('#guideggk').hide();
+            $j('#divzhezao').hide();
+        }
+       
+    } catch (err) {
+        console.error("inputbtn报错", err);
+        err = eval('(' + err + ')');
+        let msg = err.error.details[0].message + '';
+        for (let n = 25; n > 0; n--) {
+            msg = msg.replace(" e" + n + '', data.lang["e" + n][1]);
+        }
+        if (err.error.details && err.error.details[0].message) $j().jaler('' + msg);
+
+    }
+}
+
+//社群信息
+function message() {
+    //$j('#urlbox').show()
+    funcopy({
+        text: 'Telegram', ssfun: function () {
+            $j().jaler($j().ui({ cid: "guideggk", s: 10, z: 0, marg: 0, w: -89, h: 38, padd: 12, ca: "Telegram|_local('https://web.telegram.org')`Github|_local('https://github.com/AIGT-BLOCK')`Discord|_local('https://discordapp.com/login')`Medium|_local('https://medium.com/')`简书|_local('https://www.jianshu.com/')", class0: 'x_b_fff_fff_C7A780 _f_18', class1: '', ncheck: 1 }), 200, '', 1);
+        }
+    });
+}
+//社群信息
+function fejo() {
+    //$j('#urlbox').show()
+    funcopy({
+        text: 'Telegram', ssfun: function () {
+            let ul = ['https://web.telegram.org', 'https://github.com/', 'https://discordapp.com/login']
+            let ca = [];
+            ca.push('<div onclick="_local(\"web.telegram.org\")" style="text-align:left;padding:10px;font-size:22px">Telegram</div><div onclick="_local(\"github.com\")" style="text-align:left;padding:10px;font-size:22px">Github</div><div onclick="_local(\"github.com\")" style="text-align:left;padding:10px;font-size:22px">Discord</div><div onclick="_local(\"medium.com\")" style="text-align:left;padding:10px;font-size:22px">Medium</div>')
+            for (let i = 0; i < ul.length; i++) {
+                $j().jaler(ca, 200, '直接跳转|_local(' + ul[i] + ')', 1);
+            }
+        }
+    });
+}
+//交易跳转
+function trans() {
+    funcopy({
+        text: 'Telegram', ssfun: function () {
+        let jyurl='https://www.goko.com/';
+        $j().jaler('<br><br>8月8日登录goko交易所<br><br>', 200, '直接跳转|local(\'https://www.goko.com\')', 1);
+        }
+    });
+}
+function closeurl() {
+    $j('#urlbox').hide()
+}
+// 问题反馈
+function ques(url) {
+    funcopy({
+        text: url, ssfun: function () {
+            let urltext = url.split('：')[1];
+            urltext = '你已复制了 开发团队的邮箱:aigtblock@gmail.com';
+            iframemenu
+            $j().jaler(urltext, 200, '', 1);
+        }
+    });
+}
+
+</script>
+
 
 </html>
